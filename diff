@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Drift State</title>
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+
+  <header class="hero">
+    <h1 class="chrome-text">DS</h1>
+    <p class="tagline">Gothic • Street • Grunge</p>
+  </header>
+
+  <section class="gallery">
+    <h2>Stickers</h2>
+    <div class="grid">
+      <div class="placeholder">Coming Soon</div>
+      <div class="placeholder">Coming Soon</div>
+      <div class="placeholder">Coming Soon</div>
+    </div>
+  </section>
+
+  <section class="about">
+    <h2>About</h2>
+    <p>
+      Drift State is a rebellious sticker brand rooted in gothic street culture.
+      Built for cars, walls, laptops, and everywhere in between.
+    </p>
+  </section>
+
+  <footer>
+    <p>Contact: <a href="mailto:volzmain05@gmail.com">volzmain05@gmail.com</a></p>
+    <p>© Drift State</p>
+  </footer>
+
+</body>
+</html>
+
