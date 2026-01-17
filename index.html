@@ -35,7 +35,6 @@
       display: flex;
       justify-content: center;
       margin-bottom: 1.5rem;
-      background: transparent;
     }
 
     .logo-3d {
@@ -49,14 +48,12 @@
       width: 100%;
       height: 100%;
       object-fit: contain;
-      background: transparent;
       filter:
         grayscale(100%)
         brightness(1.35)
         contrast(1.45)
         drop-shadow(0 0 18px rgba(255,255,255,0.35));
       pointer-events: none;
-      display: block;
     }
 
     @keyframes spin {
@@ -74,7 +71,6 @@
     .tagline {
       font-size: 2.5rem;
       opacity: 0.85;
-      margin-top: 0.5rem;
     }
 
     /* DECALS */
@@ -101,7 +97,6 @@
       text-align: center;
       cursor: pointer;
       transition: transform 0.25s ease, box-shadow 0.25s ease;
-      background: black;
     }
 
     .decal-card:hover {
@@ -109,32 +104,33 @@
       box-shadow: 0 0 30px rgba(255,255,255,0.15);
     }
 
-    /*
-      FIX: show FULL photo (no cropping)
-      - taller frame so phone view looks good
-      - object-fit: contain
-    */
+    /* IMAGE FRAME — CENTER FIX */
     .decal-image {
       width: 100%;
-      aspect-ratio: 16 / 9; /* taller than before so you see more */
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.12);
+      aspect-ratio: 16 / 9;
+      border: 1px solid rgba(255,255,255,0.15);
       margin-bottom: 1rem;
-      overflow: hidden;
-      display: grid;
-      place-items: center;
-      padding: 10px; /* breathing room around the photo */
+      display: flex;
+      align-items: center;       /* VERTICAL CENTER */
+      justify-content: center;   /* HORIZONTAL CENTER */
+      padding: 14px;
+      background: rgba(255,255,255,0.04);
     }
 
     .decal-image img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain; /* IMPORTANT: no cropping */
-      display: block;
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
     }
 
-    .decal-name { letter-spacing: 2px; margin-bottom: 0.3rem; }
-    .decal-price { opacity: 0.85; }
+    .decal-name {
+      letter-spacing: 2px;
+      margin-bottom: 0.3rem;
+    }
+
+    .decal-price {
+      opacity: 0.85;
+    }
 
     /* MODAL */
     .modal {
@@ -146,7 +142,6 @@
       align-items: flex-start;
       padding: 2rem 1rem;
       z-index: 999;
-
       opacity: 0;
       pointer-events: none;
       transition: opacity 0.2s ease;
@@ -163,25 +158,23 @@
       text-align: center;
     }
 
-    /* Product image in modal (also no cropping) */
+    /* MODAL IMAGE — CENTER FIX */
     .modal-product-image {
       width: 100%;
-      max-width: 680px;
-      margin: 1rem auto 0.75rem;
       aspect-ratio: 16 / 9;
       border: 1px solid rgba(255,255,255,0.18);
-      background: rgba(255,255,255,0.06);
-      overflow: hidden;
-      display: grid;
-      place-items: center;
-      padding: 12px;
+      margin: 1rem auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      background: rgba(255,255,255,0.05);
     }
 
     .modal-product-image img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain; /* IMPORTANT: no cropping */
-      display: block;
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
     }
 
     .color-options span {
@@ -204,10 +197,7 @@
       margin-top: 1.75rem;
       cursor: pointer;
       opacity: 0.6;
-      user-select: none;
     }
-
-    .close:hover { opacity: 1; }
 
     footer {
       text-align: center;
@@ -219,123 +209,105 @@
 
 <body>
 
-  <!-- HERO -->
-  <section class="hero">
-    <div class="brand">
-      <div class="logo-3d-wrapper">
-        <div class="logo-3d">
-          <img src="ds-logo-v2.png?v=4" alt="DS Logo">
-        </div>
+<section class="hero">
+  <div class="brand">
+    <div class="logo-3d-wrapper">
+      <div class="logo-3d">
+        <img src="ds-logo-v2.png" alt="DS Logo">
       </div>
-
-      <div class="brand-name">𝔇𝔯𝔦𝔣𝔱 𝔰𝔱𝔞𝔱𝔢</div>
-      <div class="tagline">↓</div>
     </div>
-  </section>
-
-  <!-- DECALS -->
-  <section class="decals-section">
-    <div class="section-title">DECALS</div>
-
-    <div class="decals-grid">
-
-      <div class="decal-card"
-           onclick="openModal('DS Corner Banner','$45.00 CAD','16&quot; × 8&quot;','decal-ds-corner.png?v=2')">
-        <div class="decal-image">
-          <img src="decal-ds-corner.png?v=2" alt="DS Corner Banner">
-        </div>
-        <div class="decal-name">DS Corner Banner</div>
-        <div class="decal-price">$45.00 CAD</div>
-      </div>
-
-      <div class="decal-card"
-           onclick="openModal('DS Cursive Banner','$55.00 CAD','36&quot; × 5&quot;','decal-ds-cursive.png?v=2')">
-        <div class="decal-image">
-          <img src="decal-ds-cursive.png?v=2" alt="DS Cursive Banner">
-        </div>
-        <div class="decal-name">DS Cursive Banner</div>
-        <div class="decal-price">$55.00 CAD</div>
-      </div>
-
-      <div class="decal-card"
-           onclick="openModal('DS Grunge Banner','$50.00 CAD','21&quot; × 9&quot;','decal-ds-grunge.png?v=2')">
-        <div class="decal-image">
-          <img src="decal-ds-grunge.png?v=2" alt="DS Grunge Banner">
-        </div>
-        <div class="decal-name">DS Grunge Banner</div>
-        <div class="decal-price">$50.00 CAD</div>
-      </div>
-
-      <div class="decal-card"
-           onclick="openModal('DS Gothic Banner','$55.00 CAD','32&quot; × 4&quot;','decal-ds-gothic.png?v=2')">
-        <div class="decal-image">
-          <img src="decal-ds-gothic.png?v=2" alt="DS Gothic Banner">
-        </div>
-        <div class="decal-name">DS Gothic Banner</div>
-        <div class="decal-price">$55.00 CAD</div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- MODAL -->
-  <div class="modal" id="productModal" onclick="if(event.target.id==='productModal')closeModal()">
-    <div class="modal-content">
-
-      <div class="logo-3d-wrapper">
-        <div class="logo-3d">
-          <img src="ds-logo-v2.png?v=4" alt="DS Logo">
-        </div>
-      </div>
-
-      <div class="modal-product-image">
-        <img id="modalProductImg" src="" alt="Decal Image">
-      </div>
-
-      <h2 id="modalTitle"></h2>
-      <p id="modalPrice"></p>
-      <p id="modalSize"></p>
-
-      <div class="color-options" id="colorOptions">
-        <span onclick="selectColor(this)">Black</span>
-        <span onclick="selectColor(this)">White</span>
-        <span onclick="selectColor(this)">Silver</span>
-      </div>
-
-      <div class="close" onclick="closeModal()">Close</div>
-    </div>
+    <div class="brand-name">𝔇𝔯𝔦𝔣𝔱 𝔰𝔱𝔞𝔱𝔢</div>
+    <div class="tagline">↓</div>
   </div>
+</section>
 
-  <footer>© Drift State</footer>
+<section class="decals-section">
+  <div class="section-title">DECALS</div>
 
-  <script>
-    let selectedColor = null;
+  <div class="decals-grid">
 
-    function openModal(name, price, size, imgSrc) {
-      document.getElementById('modalTitle').innerText = name;
-      document.getElementById('modalPrice').innerText = price;
-      document.getElementById('modalSize').innerText = "Size: " + size;
+    <div class="decal-card" onclick="openModal('DS Corner Banner','$45.00 CAD','16\" × 8\"','decal-ds-corner.png')">
+      <div class="decal-image">
+        <img src="decal-ds-corner.png">
+      </div>
+      <div class="decal-name">DS Corner Banner</div>
+      <div class="decal-price">$45.00 CAD</div>
+    </div>
 
-      const img = document.getElementById('modalProductImg');
-      img.src = imgSrc;
-      img.alt = name;
+    <div class="decal-card" onclick="openModal('DS Cursive Banner','$55.00 CAD','36\" × 5\"','decal-ds-cursive.png')">
+      <div class="decal-image">
+        <img src="decal-ds-cursive.png">
+      </div>
+      <div class="decal-name">DS Cursive Banner</div>
+      <div class="decal-price">$55.00 CAD</div>
+    </div>
 
-      selectedColor = null;
-      document.querySelectorAll('#colorOptions span').forEach(s => s.classList.remove('active'));
+    <div class="decal-card" onclick="openModal('DS Grunge Banner','$50.00 CAD','21\" × 9\"','decal-ds-grunge.png')">
+      <div class="decal-image">
+        <img src="decal-ds-grunge.png">
+      </div>
+      <div class="decal-name">DS Grunge Banner</div>
+      <div class="decal-price">$50.00 CAD</div>
+    </div>
 
-      document.getElementById('productModal').classList.add('active');
-    }
+    <div class="decal-card" onclick="openModal('DS Gothic Banner','$55.00 CAD','32\" × 4\"','decal-ds-gothic.png')">
+      <div class="decal-image">
+        <img src="decal-ds-gothic.png">
+      </div>
+      <div class="decal-name">DS Gothic Banner</div>
+      <div class="decal-price">$55.00 CAD</div>
+    </div>
 
-    function closeModal() {
-      document.getElementById('productModal').classList.remove('active');
-    }
+  </div>
+</section>
 
-    function selectColor(el) {
-      document.querySelectorAll('#colorOptions span').forEach(s => s.classList.remove('active'));
-      el.classList.add('active');
-      selectedColor = el.innerText;
-    }
-  </script>
+<div class="modal" id="productModal" onclick="if(event.target.id==='productModal')closeModal()">
+  <div class="modal-content">
+
+    <div class="logo-3d-wrapper">
+      <div class="logo-3d">
+        <img src="ds-logo-v2.png">
+      </div>
+    </div>
+
+    <div class="modal-product-image">
+      <img id="modalProductImg">
+    </div>
+
+    <h2 id="modalTitle"></h2>
+    <p id="modalPrice"></p>
+    <p id="modalSize"></p>
+
+    <div class="color-options">
+      <span onclick="selectColor(this)">Black</span>
+      <span onclick="selectColor(this)">White</span>
+      <span onclick="selectColor(this)">Silver</span>
+    </div>
+
+    <div class="close" onclick="closeModal()">Close</div>
+  </div>
+</div>
+
+<footer>© Drift State</footer>
+
+<script>
+  function openModal(name, price, size, img) {
+    document.getElementById('modalTitle').innerText = name;
+    document.getElementById('modalPrice').innerText = price;
+    document.getElementById('modalSize').innerText = "Size: " + size;
+    document.getElementById('modalProductImg').src = img;
+    document.getElementById('productModal').classList.add('active');
+  }
+
+  function closeModal() {
+    document.getElementById('productModal').classList.remove('active');
+  }
+
+  function selectColor(el) {
+    document.querySelectorAll('.color-options span').forEach(s => s.classList.remove('active'));
+    el.classList.add('active');
+  }
+</script>
 
 </body>
 </html>
