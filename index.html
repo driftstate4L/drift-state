@@ -9,43 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&display=swap" rel="stylesheet">
 
   <style>
-    * {
-      box-sizing: border-box;
-    }
-.logo-3d-wrapper {
-  perspective: 1000px;
-  display: flex;
-  justify-content: center;
-  margin-bottom: 2rem;
-  background: transparent;
-}
-
-.logo-3d {
-  width: 220px;
-  height: 220px;
-  transform-style: preserve-3d;
-  animation: spin 10s linear infinite;
-}
-
-.logo-3d img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  filter:
-    grayscale(100%)
-    brightness(1.3)
-    contrast(1.4)
-    drop-shadow(0 0 20px rgba(255,255,255,0.4));
-}
-
-@keyframes spin {
-  from {
-    transform: rotateY(0deg);
-  }
-  to {
-    transform: rotateY(360deg);
-  }
-}
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
@@ -54,6 +18,7 @@
       font-family: Arial, sans-serif;
     }
 
+    /* HERO */
     .hero {
       min-height: 100vh;
       display: flex;
@@ -63,305 +28,252 @@
       padding: 2rem;
     }
 
-    .brand {
-      max-width: 700px;
+    .brand { max-width: 700px; }
+
+    /* 3D LOGO */
+    .logo-3d-wrapper {
+      perspective: 1000px;
+      display: flex;
+      justify-content: center;
+      margin-bottom: 2rem;
+      background: transparent;
     }
 
-    .logo {
+    .logo-3d {
+      width: 220px;
+      height: 220px;
+      transform-style: preserve-3d;
+      animation: spin 10s linear infinite;
+    }
+
+    .logo-3d img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      filter: grayscale(100%) brightness(1.3) contrast(1.4)
+        drop-shadow(0 0 20px rgba(255,255,255,0.4));
+    }
+
+    @keyframes spin {
+      from { transform: rotateY(0deg); }
+      to { transform: rotateY(360deg); }
+    }
+
+    .logo-text {
       font-family: 'UnifrakturCook', cursive;
-      font-size: 4.5rem;
+      font-size: 4rem;
       letter-spacing: 6px;
-      background: linear-gradient(
-        180deg,
-        #ffffff 0%,
-        #cfcfcf 20%,
-        #8a8a8a 45%,
-        #ffffff 70%,
-        #9e9e9e 100%
-      );
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      text-shadow:
-        0 0 8px rgba(255,255,255,0.6),
-        0 0 25px rgba(255,255,255,0.25);
+      margin-bottom: 0.5rem;
     }
 
     .tagline {
-      margin-top: 1rem;
       letter-spacing: 3px;
-      opacity: 0.75;
+      opacity: 0.7;
     }
 
-    .divider {
-      width: 80px;
-      height: 1px;
+    /* DECALS */
+    .decals-section {
+      padding: 5rem 2rem;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 2.5rem;
+      letter-spacing: 6px;
+      margin-bottom: 3rem;
+    }
+
+    .decals-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .decal-card {
+      border: 1px solid rgba(255,255,255,0.25);
+      padding: 1.5rem;
+      text-align: center;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .decal-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 0 30px rgba(255,255,255,0.15);
+    }
+
+    .decal-image {
+      width: 100%;
+      aspect-ratio: 1 / 1;
       background: white;
-      margin: 2rem auto;
-      opacity: 0.5;
+      margin-bottom: 1rem;
     }
 
-    .status {
-      text-transform: uppercase;
-      font-size: 0.9rem;
-      letter-spacing: 4px;
+    .decal-name {
+      letter-spacing: 2px;
+      margin-bottom: 0.4rem;
+    }
+
+    .decal-price { opacity: 0.8; }
+
+    /* MODAL */
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.95);
+      display: none;
+      justify-content: center;
+      align-items: flex-start;
+      overflow-y: auto;
+      z-index: 999;
+    }
+
+    .modal.active { display: flex; }
+
+    .modal-content {
+      max-width: 600px;
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+
+    .color-options span {
+      display: inline-block;
+      border: 1px solid white;
+      padding: 0.45rem 0.9rem;
+      margin: 0.35rem;
+      cursor: pointer;
+      font-size: 0.8rem;
+      opacity: 0.7;
+      transition: 0.25s;
+    }
+
+    .color-options span.active {
+      background: white;
+      color: black;
+      opacity: 1;
+    }
+
+    .close {
+      margin-top: 2rem;
       opacity: 0.6;
+      cursor: pointer;
     }
 
     footer {
       text-align: center;
-      padding: 2rem 1rem;
+      padding: 2rem;
       font-size: 0.85rem;
       opacity: 0.6;
     }
-
-    footer a {
-      color: white;
-      text-decoration: none;
-    }
-
-    footer a:hover {
-      text-decoration: underline;
-    }
-    .decals-section {
-  padding: 5rem 2rem;
-}
-
-.section-title {
-  text-align: center;
-  font-size: 2.5rem;
-  letter-spacing: 6px;
-  margin-bottom: 3rem;
-}
-
-.decals-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 2rem;
-  max-width: 1100px;
-  margin: 0 auto;
-}
-
-.decal-card {
-  border: 1px solid rgba(255,255,255,0.25);
-  padding: 1.5rem;
-  text-align: center;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-.decal-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 0 30px rgba(255,255,255,0.15);
-}
-
-.decal-image {
-  width: 100%;
-  aspect-ratio: 1 / 1;
-  background: white;
-  margin-bottom: 1rem;
-}
-
-.decal-name {
-  letter-spacing: 2px;
-  margin-bottom: 0.5rem;
-}
-
-.decal-price {
-  opacity: 0.8;
-}
-
-/* MODAL */
-.modal {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.95);
-  display: none;
-  justify-content: center;
-  align-items: flex-start;
-  overflow-y: auto;
-  z-index: 999;
-}
-
-.modal.active {
-  display: flex;
-}
-
-.modal-content {
-  max-width: 600px;
-  padding: 3rem 2rem;
-  text-align: center;
-}
-
-.modal h2 {
-  letter-spacing: 3px;
-}
-
-.color-options span {
-  display: inline-block;
-  border: 1px solid white;
-  padding: 0.4rem 0.8rem;
-  margin: 0.3rem;
-  cursor: pointer;
-}
-
-.close {
-  margin-top: 2rem;
-  opacity: 0.6;
-  cursor: pointer;
-}
-.color-options span {
-  display: inline-block;
-  border: 1px solid white;
-  padding: 0.45rem 0.9rem;
-  margin: 0.35rem;
-  cursor: pointer;
-  font-size: 0.8rem;
-  opacity: 0.7;
-  transition: 0.25s;
-}
-
-.color-options span:hover {
-  opacity: 1;
-}
-
-.color-options span.active {
-  background: white;
-  color: black;
-  opacity: 1;
-}
-
   </style>
 </head>
+
 <body>
 
+  <!-- HERO -->
   <section class="hero">
     <div class="brand">
       <div class="logo-3d-wrapper">
-  <div class="logo-3d">
-    <img src="ds-logo.png" alt="Drift State DS Logo">
-  </div>
-</div>
-      <div class="logo">DRIFT STATE</div>
+        <div class="logo-3d">
+          <img src="ds-logo.png" alt="DS Logo">
+        </div>
+      </div>
+      <div class="logo-text">DRIFT STATE</div>
       <div class="tagline">GOTHIC • STREET • GRUNGE</div>
-      <div class="divider"></div>
-      <div class="status">First Drop Coming Soon</div>
     </div>
   </section>
-<section class="decals-section">
-  <div class="section-title">DECALS</div>
 
-  <div class="decals-grid">
+  <!-- DECALS -->
+  <section class="decals-section">
+    <div class="section-title">DECALS</div>
+    <div class="decals-grid">
 
-   <div class="decal-card"
-  onclick="openModal(
-    'DS Corner Banner',
-    '$45.00 CAD',
-    '16\" × 8\"'
-  )">
-  <div class="decal-image"></div>
-  <div class="decal-name">DS Corner Banner</div>
-  <div class="decal-price">$45.00 CAD</div>
-</div>
+      <div class="decal-card" onclick="openModal('DS Corner Banner','$45.00 CAD','16\" × 8\"')">
+        <div class="decal-image"></div>
+        <div class="decal-name">DS Corner Banner</div>
+        <div class="decal-price">$45.00 CAD</div>
+      </div>
 
-<div class="decal-card"
-  onclick="openModal(
-    'DS Cursive Banner',
-    '$55.00 CAD',
-    '36\" × 5\"'
-  )">
-  <div class="decal-image"></div>
-  <div class="decal-name">DS Cursive Banner</div>
-  <div class="decal-price">$55.00 CAD</div>
-</div>
+      <div class="decal-card" onclick="openModal('DS Cursive Banner','$55.00 CAD','36\" × 5\"')">
+        <div class="decal-image"></div>
+        <div class="decal-name">DS Cursive Banner</div>
+        <div class="decal-price">$55.00 CAD</div>
+      </div>
 
-<div class="decal-card"
-  onclick="openModal(
-    'DS Grunge Banner',
-    '$50.00 CAD',
-    '21\" × 9\"'
-  )">
-  <div class="decal-image"></div>
-  <div class="decal-name">DS Grunge Banner</div>
-  <div class="decal-price">$50.00 CAD</div>
-</div>
+      <div class="decal-card" onclick="openModal('DS Grunge Banner','$50.00 CAD','21\" × 9\"')">
+        <div class="decal-image"></div>
+        <div class="decal-name">DS Grunge Banner</div>
+        <div class="decal-price">$50.00 CAD</div>
+      </div>
 
-<div class="decal-card"
-  onclick="openModal(
-    'DS Gothic Banner',
-    '$55.00 CAD',
-    '32\" × 4\"'
-  )">
-  <div class="decal-image"></div>
-  <div class="decal-name">DS Gothic Banner</div>
-  <div class="decal-price">$55.00 CAD</div>
-</div>
+      <div class="decal-card" onclick="openModal('DS Gothic Banner','$55.00 CAD','32\" × 4\"')">
+        <div class="decal-image"></div>
+        <div class="decal-name">DS Gothic Banner</div>
+        <div class="decal-price">$55.00 CAD</div>
+      </div>
 
+    </div>
+  </section>
 
+  <!-- MODAL -->
+  <div class="modal" id="productModal">
+    <div class="modal-content">
+
+      <div class="logo-3d-wrapper">
+        <div class="logo-3d">
+          <img src="ds-logo.png" alt="DS Logo">
+        </div>
+      </div>
+
+      <h2 id="modalTitle"></h2>
+      <p id="modalPrice"></p>
+      <p id="modalSize"></p>
+
+      <div class="color-options" id="colorOptions">
+        <span onclick="selectColor(this)">Black</span>
+        <span onclick="selectColor(this)">White</span>
+        <span onclick="selectColor(this)">Silver</span>
+      </div>
+
+      <div class="close" onclick="closeModal()">Close</div>
+    </div>
   </div>
-</section>
 
   <footer>
-    <p>
-      <a href="mailto:volzmain05@gmail.com">volzmain05@gmail.com</a>
-    </p>
     <p>© Drift State</p>
   </footer>
 
-<div class="modal" id="productModal">
-  <div class="modal-content">
+  <!-- SCRIPT -->
+  <script>
+    let selectedColor = null;
 
-    <!-- SPINNING LOGO -->
-    <div class="logo-3d-wrapper">
-      <div class="logo-3d">
-        <img src="ds-logo.png" alt="DS Logo">
-      </div>
-    </div>
+    function openModal(name, price, size) {
+      document.getElementById('modalTitle').innerText = name;
+      document.getElementById('modalPrice').innerText = price;
+      document.getElementById('modalSize').innerText = "Size: " + size;
 
-    <h2 id="modalTitle"></h2>
-    <p id="modalPrice"></p>
-    <p id="modalSize"></p>
+      selectedColor = null;
+      resetColors();
+      document.getElementById('productModal').classList.add('active');
+    }
 
-   <div class="color-options" id="colorOptions">
-  <span onclick="selectColor(this)">Black</span>
-  <span onclick="selectColor(this)">White</span>
-  <span onclick="selectColor(this)">Silver</span>
-</div>
+    function closeModal() {
+      document.getElementById('productModal').classList.remove('active');
+    }
 
+    function selectColor(el) {
+      resetColors();
+      el.classList.add('active');
+      selectedColor = el.innerText;
+    }
 
-    <div class="close" onclick="closeModal()">Close</div>
-  </div>
-</div>
-<script>
- <script>
-  let selectedColor = null;
+    function resetColors() {
+      document.querySelectorAll('#colorOptions span')
+        .forEach(el => el.classList.remove('active'));
+    }
+  </script>
 
-  function openModal(name, price, size) {
-    document.getElementById('modalTitle').innerText = name;
-    document.getElementById('modalPrice').innerText = price;
-    document.getElementById('modalSize').innerText = "Size: " + size;
-
-    selectedColor = null;
-    resetColors();
-
-    document.getElementById('productModal').classList.add('active');
-  }
-
-  function closeModal() {
-    document.getElementById('productModal').classList.remove('active');
-  }
-
-  function selectColor(element) {
-    resetColors();
-    element.classList.add('active');
-    selectedColor = element.innerText;
-  }
-
-  function resetColors() {
-    document.querySelectorAll('#colorOptions span')
-      .forEach(el => el.classList.remove('active'));
-  }
-</script>
-
-</script>
 </body>
 </html>
