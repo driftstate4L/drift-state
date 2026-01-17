@@ -58,6 +58,7 @@
         contrast(1.45)
         drop-shadow(0 0 18px rgba(255,255,255,0.35));
       pointer-events: none;
+      display: block;
     }
 
     @keyframes spin {
@@ -161,6 +162,7 @@
       margin: 0.35rem;
       cursor: pointer;
       opacity: 0.7;
+      user-select: none;
     }
 
     .color-options span.active {
@@ -173,6 +175,7 @@
       margin-top: 2rem;
       cursor: pointer;
       opacity: 0.6;
+      user-select: none;
     }
 
     footer {
@@ -190,7 +193,8 @@
     <div class="brand">
       <div class="logo-3d-wrapper">
         <div class="logo-3d">
-          <img src="ds-logo.png" alt="DS Logo">
+          <!-- IMPORTANT: new filename to beat cache -->
+          <img src="ds-logo-v2.png?v=1" alt="DS Logo">
         </div>
       </div>
       <div class="brand-name">DRIFT STATE</div>
@@ -235,7 +239,7 @@
 
       <div class="logo-3d-wrapper">
         <div class="logo-3d">
-          <img src="ds-logo.png" alt="DS Logo">
+          <img src="ds-logo-v2.png?v=1" alt="DS Logo">
         </div>
       </div>
 
@@ -274,4 +278,11 @@
     }
 
     function selectColor(el) {
-      document.querySelectorAll('#colorOptions span')
+      document.querySelectorAll('#colorOptions span').forEach(s => s.classList.remove('active'));
+      el.classList.add('active');
+      selectedColor = el.innerText;
+    }
+  </script>
+
+</body>
+</html>
