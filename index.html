@@ -28,7 +28,7 @@
     }
     .brand { max-width: 780px; }
 
-    /* Real 3D logo containers */
+    /* REAL 3D (optional) container */
     .logo3d-wrap {
       width: 260px;
       height: 260px;
@@ -36,16 +36,32 @@
       background: transparent;
       display: grid;
       place-items: center;
+      position: relative;
     }
+
+    /* Fallback image is ALWAYS visible by default */
+    .fallback-img {
+      width: 220px;
+      height: 220px;
+      object-fit: contain;
+      display: block;               /* IMPORTANT: visible by default */
+      background: transparent;
+      filter: grayscale(100%) brightness(1.35) contrast(1.45)
+        drop-shadow(0 0 18px rgba(255,255,255,0.35));
+      pointer-events: none;         /* never blocks clicks */
+    }
+
+    /* Canvas is hidden by default; only shown if 3D starts successfully */
     .logo3d-canvas {
       width: 100%;
       height: 100%;
-      display: block;
+      display: none;                /* IMPORTANT: hidden by default */
       background: transparent;
-      pointer-events: none; /* never blocks clicks */
+      pointer-events: none;         /* never blocks clicks */
+      position: absolute;
+      inset: 0;
     }
 
-    /* Text */
     .brand-name {
       font-family: 'UnifrakturCook', cursive;
       font-size: 4rem;
@@ -116,13 +132,11 @@
       opacity: 1;
       pointer-events: auto;
     }
-
     .modal-content {
       max-width: 640px;
       width: 100%;
       text-align: center;
     }
-
     .modal h2 { margin: 0.75rem 0 0.35rem; letter-spacing: 3px; }
     .modal p { margin: 0.25rem 0; opacity: 0.85; }
 
@@ -152,16 +166,6 @@
     }
     .close:hover { opacity: 1; }
 
-    /* Fallback image if WebGL fails */
-    .fallback-img {
-      width: 220px;
-      height: 220px;
-      object-fit: contain;
-      display: none;
-      filter: grayscale(100%) brightness(1.35) contrast(1.45)
-        drop-shadow(0 0 18px rgba(255,255,255,0.35));
-    }
-
     footer {
       text-align: center;
       padding: 2rem;
@@ -178,10 +182,10 @@
   <section class="hero">
     <div class="brand">
 
-      <!-- REAL 3D LOGO (WebGL) -->
+      <!-- Logo: ALWAYS shows image. 3D spins on top if it loads. -->
       <div class="logo3d-wrap">
-        <canvas id="logo3dHero" class="logo3d-canvas"></canvas>
         <img src="ds-logo.png" alt="DS Logo" class="fallback-img" id="fallbackHero">
+        <canvas id="logo3dHero" class="logo3d-canvas"></canvas>
       </div>
 
       <div class="brand-name">DRIFT STATE</div>
@@ -224,10 +228,9 @@
   <div class="modal" id="productModal" onclick="if(event.target.id==='productModal')closeModal()">
     <div class="modal-content">
 
-      <!-- REAL 3D LOGO (WebGL) -->
       <div class="logo3d-wrap" style="width:230px;height:230px;margin-top:0.25rem;">
+        <img src="ds-logo.png" alt="DS Logo" class="fallback-img" id="fallbackModal" style="width:200px;height:200px;">
         <canvas id="logo3dModal" class="logo3d-canvas"></canvas>
-        <img src="ds-logo.png" alt="DS Logo" class="fallback-img" id="fallbackModal">
       </div>
 
       <h2 id="modalTitle"></h2>
@@ -249,7 +252,7 @@
     <div>© Drift State</div>
   </footer>
 
-  <!-- App logic (modal + colors) -->
+  <!-- Modal + colors -->
   <script>
     let selectedColor = null;
 
@@ -275,27 +278,30 @@
     }
   </script>
 
-  <!-- Real 3D (Three.js) -->
+  <!-- Optional REAL 3D layer (WebGL). If it fails, your image still shows. -->
   <script type="module">
-    import * as THREE from "https://unpkg.com/three@0.161.0/build/three.module.js";
-    import { RoomEnvironment } from "https://unpkg.com/three@0.161.0/examples/jsm/environments/RoomEnvironment.js";
-
     const LOGO_SRC = "ds-logo.png";
 
-    function showFallback(canvasId, imgId) {
-      const c = document.getElementById(canvasId);
-      const img = document.getElementById(imgId);
-      if (c) c.style.display = "none";
-      if (img) img.style.display = "block";
-    }
-
-    function create3DLogo(canvasId, fallbackImgId) {
+    async function start3D(canvasId, fallbackId) {
       const canvas = document.getElementById(canvasId);
-      if (!canvas) return null;
+      const fallback = document.getElementById(fallbackId);
+      if (!canvas || !fallback) return;
 
-      // WebGL support check
+      // If WebGL isn't supported, keep the image (fallback) visible.
       const gl = canvas.getContext("webgl2") || canvas.getContext("webgl");
-      if (!gl) { showFallback(canvasId, fallbackImgId); return null; }
+      if (!gl) return;
+
+      let THREE, RoomEnvironment;
+      try {
+        THREE = await import("https://unpkg.com/three@0.161.0/build/three.module.js");
+        ({ RoomEnvironment } = await import("https://unpkg.com/three@0.161.0/examples/jsm/environments/RoomEnvironment.js"));
+      } catch (e) {
+        // If CDN is blocked / offline, keep fallback image.
+        return;
+      }
+
+      // Show canvas only AFTER we successfully init Three.js
+      canvas.style.display = "block";
 
       const renderer = new THREE.WebGLRenderer({
         canvas,
@@ -304,15 +310,13 @@
         powerPreference: "high-performance"
       });
       renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
-      renderer.setClearColor(0x000000, 0); // transparent
+      renderer.setClearColor(0x000000, 0);
 
       const scene = new THREE.Scene();
 
-      // Camera
       const camera = new THREE.PerspectiveCamera(35, 1, 0.1, 100);
       camera.position.set(0, 0.2, 4);
 
-      // Lighting
       const key = new THREE.DirectionalLight(0xffffff, 2.2);
       key.position.set(3, 4, 5);
       scene.add(key);
@@ -325,17 +329,13 @@
       rim.position.set(0, 3, -5);
       scene.add(rim);
 
-      // Procedural environment for reflections (no external HDR needed)
       const pmrem = new THREE.PMREMGenerator(renderer);
       const envTex = pmrem.fromScene(new RoomEnvironment(renderer), 0.04).texture;
       scene.environment = envTex;
 
-      // Group (our “real 3D object”)
       const group = new THREE.Group();
       scene.add(group);
 
-      // A real 3D base “coin” (cylinder) for true depth
-      const baseGeo = new THREE.CylinderGeometry(1.2, 1.2, 0.22, 64, 1, true);
       const chrome = new THREE.MeshPhysicalMaterial({
         color: 0xffffff,
         metalness: 1,
@@ -344,18 +344,31 @@
         clearcoatRoughness: 0.08,
         envMapIntensity: 1.6
       });
+
+      // Coin body
+      const baseGeo = new THREE.CylinderGeometry(1.2, 1.2, 0.22, 64, 1, true);
       const base = new THREE.Mesh(baseGeo, chrome);
-      base.rotation.x = Math.PI / 2; // face camera (cylinder axis toward camera)
+      base.rotation.x = Math.PI / 2;
       group.add(base);
 
-      // Front/back plates with your logo as a texture (with alpha)
+      // Logo texture faces
       const loader = new THREE.TextureLoader();
-      const logoTex = loader.load(
-        LOGO_SRC,
-        () => { /* loaded */ },
-        undefined,
-        () => { showFallback(canvasId, fallbackImgId); }
-      );
+      let logoTex;
+      try {
+        logoTex = await new Promise((resolve, reject) => {
+          loader.load(
+            LOGO_SRC,
+            t => resolve(t),
+            undefined,
+            e => reject(e)
+          );
+        });
+      } catch (e) {
+        // If image fails to load, hide canvas and keep fallback.
+        canvas.style.display = "none";
+        return;
+      }
+
       logoTex.colorSpace = THREE.SRGBColorSpace;
 
       const faceMat = new THREE.MeshPhysicalMaterial({
@@ -367,13 +380,13 @@
         envMapIntensity: 1.8,
         map: logoTex,
         transparent: true,
-        alphaTest: 0.35 // makes the transparent parts cut cleanly
+        alphaTest: 0.35
       });
 
       const plateGeo = new THREE.CircleGeometry(1.12, 64);
 
       const front = new THREE.Mesh(plateGeo, faceMat);
-      front.position.z = 0.12; // just above the coin face
+      front.position.z = 0.12;
       group.add(front);
 
       const back = new THREE.Mesh(plateGeo, faceMat);
@@ -381,13 +394,12 @@
       back.position.z = -0.12;
       group.add(back);
 
-      // Small bevel ring (adds “machined” edge)
+      // Bevel ring
       const ringGeo = new THREE.TorusGeometry(1.18, 0.04, 16, 100);
       const ring = new THREE.Mesh(ringGeo, chrome);
       ring.rotation.x = Math.PI / 2;
       group.add(ring);
 
-      // Initial tilt for a more 3D look
       group.rotation.x = 0.25;
       group.rotation.y = 0.25;
 
@@ -401,34 +413,27 @@
       }
       resize();
 
+      const ro = new ResizeObserver(resize);
+      ro.observe(canvas);
+
+      // Hide fallback ONLY after everything is running
+      fallback.style.visibility = "hidden";
+
       let alive = true;
       function animate() {
         if (!alive) return;
-        group.rotation.y += 0.01; // spin
+        group.rotation.y += 0.01;
         renderer.render(scene, camera);
         requestAnimationFrame(animate);
       }
       animate();
 
-      // Keep it responsive
-      const ro = new ResizeObserver(resize);
-      ro.observe(canvas);
-
-      return {
-        dispose() {
-          alive = false;
-          ro.disconnect();
-          renderer.dispose();
-          pmrem.dispose();
-          if (envTex) envTex.dispose();
-          if (logoTex) logoTex.dispose();
-        }
-      };
+      // If the tab becomes inactive, Three can still run fine; leaving it simple.
     }
 
-    // Build both logos
-    create3DLogo("logo3dHero", "fallbackHero");
-    create3DLogo("logo3dModal", "fallbackModal");
+    // Start 3D on both canvases; fallback image will remain if anything fails.
+    start3D("logo3dHero", "fallbackHero");
+    start3D("logo3dModal", "fallbackModal");
   </script>
 
 </body>
