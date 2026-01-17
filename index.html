@@ -109,22 +109,27 @@
       box-shadow: 0 0 30px rgba(255,255,255,0.15);
     }
 
-    /* Banner image frame (wide, not square) */
+    /*
+      FIX: show FULL photo (no cropping)
+      - taller frame so phone view looks good
+      - object-fit: contain
+    */
     .decal-image {
       width: 100%;
-      aspect-ratio: 3 / 1;
+      aspect-ratio: 16 / 9; /* taller than before so you see more */
       background: rgba(255,255,255,0.06);
       border: 1px solid rgba(255,255,255,0.12);
       margin-bottom: 1rem;
       overflow: hidden;
       display: grid;
       place-items: center;
+      padding: 10px; /* breathing room around the photo */
     }
 
     .decal-image img {
       width: 100%;
       height: 100%;
-      object-fit: cover; /* keeps it filled and clean */
+      object-fit: contain; /* IMPORTANT: no cropping */
       display: block;
     }
 
@@ -158,23 +163,24 @@
       text-align: center;
     }
 
-    /* Product image in modal */
+    /* Product image in modal (also no cropping) */
     .modal-product-image {
       width: 100%;
       max-width: 680px;
       margin: 1rem auto 0.75rem;
-      aspect-ratio: 3 / 1;
+      aspect-ratio: 16 / 9;
       border: 1px solid rgba(255,255,255,0.18);
       background: rgba(255,255,255,0.06);
       overflow: hidden;
       display: grid;
       place-items: center;
+      padding: 12px;
     }
 
     .modal-product-image img {
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      object-fit: contain; /* IMPORTANT: no cropping */
       display: block;
     }
 
@@ -218,7 +224,7 @@
     <div class="brand">
       <div class="logo-3d-wrapper">
         <div class="logo-3d">
-          <img src="ds-logo-v2.png?v=3" alt="DS Logo">
+          <img src="ds-logo-v2.png?v=4" alt="DS Logo">
         </div>
       </div>
 
@@ -234,56 +240,36 @@
     <div class="decals-grid">
 
       <div class="decal-card"
-           onclick="openModal(
-             'DS Corner Banner',
-             '$45.00 CAD',
-             '16&quot; × 8&quot;',
-             'decal-ds-corner.png?v=1'
-           )">
+           onclick="openModal('DS Corner Banner','$45.00 CAD','16&quot; × 8&quot;','decal-ds-corner.png?v=2')">
         <div class="decal-image">
-          <img src="decal-ds-corner.png?v=1" alt="DS Corner Banner">
+          <img src="decal-ds-corner.png?v=2" alt="DS Corner Banner">
         </div>
         <div class="decal-name">DS Corner Banner</div>
         <div class="decal-price">$45.00 CAD</div>
       </div>
 
       <div class="decal-card"
-           onclick="openModal(
-             'DS Cursive Banner',
-             '$55.00 CAD',
-             '36&quot; × 5&quot;',
-             'decal-ds-cursive.png?v=1'
-           )">
+           onclick="openModal('DS Cursive Banner','$55.00 CAD','36&quot; × 5&quot;','decal-ds-cursive.png?v=2')">
         <div class="decal-image">
-          <img src="decal-ds-cursive.png?v=1" alt="DS Cursive Banner">
+          <img src="decal-ds-cursive.png?v=2" alt="DS Cursive Banner">
         </div>
         <div class="decal-name">DS Cursive Banner</div>
         <div class="decal-price">$55.00 CAD</div>
       </div>
 
       <div class="decal-card"
-           onclick="openModal(
-             'DS Grunge Banner',
-             '$50.00 CAD',
-             '21&quot; × 9&quot;',
-             'decal-ds-grunge.png?v=1'
-           )">
+           onclick="openModal('DS Grunge Banner','$50.00 CAD','21&quot; × 9&quot;','decal-ds-grunge.png?v=2')">
         <div class="decal-image">
-          <img src="decal-ds-grunge.png?v=1" alt="DS Grunge Banner">
+          <img src="decal-ds-grunge.png?v=2" alt="DS Grunge Banner">
         </div>
         <div class="decal-name">DS Grunge Banner</div>
         <div class="decal-price">$50.00 CAD</div>
       </div>
 
       <div class="decal-card"
-           onclick="openModal(
-             'DS Gothic Banner',
-             '$55.00 CAD',
-             '32&quot; × 4&quot;',
-             'decal-ds-gothic.png?v=1'
-           )">
+           onclick="openModal('DS Gothic Banner','$55.00 CAD','32&quot; × 4&quot;','decal-ds-gothic.png?v=2')">
         <div class="decal-image">
-          <img src="decal-ds-gothic.png?v=1" alt="DS Gothic Banner">
+          <img src="decal-ds-gothic.png?v=2" alt="DS Gothic Banner">
         </div>
         <div class="decal-name">DS Gothic Banner</div>
         <div class="decal-price">$55.00 CAD</div>
@@ -298,7 +284,7 @@
 
       <div class="logo-3d-wrapper">
         <div class="logo-3d">
-          <img src="ds-logo-v2.png?v=3" alt="DS Logo">
+          <img src="ds-logo-v2.png?v=4" alt="DS Logo">
         </div>
       </div>
 
@@ -330,12 +316,10 @@
       document.getElementById('modalPrice').innerText = price;
       document.getElementById('modalSize').innerText = "Size: " + size;
 
-      // Set modal product image
       const img = document.getElementById('modalProductImg');
       img.src = imgSrc;
       img.alt = name;
 
-      // Reset color selection
       selectedColor = null;
       document.querySelectorAll('#colorOptions span').forEach(s => s.classList.remove('active'));
 
