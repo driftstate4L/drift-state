@@ -209,6 +209,26 @@
   opacity: 0.6;
   cursor: pointer;
 }
+.color-options span {
+  display: inline-block;
+  border: 1px solid white;
+  padding: 0.45rem 0.9rem;
+  margin: 0.35rem;
+  cursor: pointer;
+  font-size: 0.8rem;
+  opacity: 0.7;
+  transition: 0.25s;
+}
+
+.color-options span:hover {
+  opacity: 1;
+}
+
+.color-options span.active {
+  background: white;
+  color: black;
+  opacity: 1;
+}
 
   </style>
 </head>
@@ -232,29 +252,50 @@
 
   <div class="decals-grid">
 
-    <div class="decal-card" onclick="openModal('DS Corner Banner', '45.00 CAD', '16\" x 8\"')">
-      <div class="decal-image"></div>
-      <div class="decal-name">DS Corner Banner</div>
-      <div class="decal-price">$45.00 CAD</div>
-    </div>
+   <div class="decal-card"
+  onclick="openModal(
+    'DS Corner Banner',
+    '$45.00 CAD',
+    '16\" × 8\"'
+  )">
+  <div class="decal-image"></div>
+  <div class="decal-name">DS Corner Banner</div>
+  <div class="decal-price">$45.00 CAD</div>
+</div>
 
-    <div class="decal-card" onclick="openModal('DS Cursive Banner', '55.00 CAD', '36\" x 5\"')">
-      <div class="decal-image"></div>
-      <div class="decal-name">DS Cursive Banner</div>
-      <div class="decal-price">$55.00 CAD</div>
-    </div>
+<div class="decal-card"
+  onclick="openModal(
+    'DS Cursive Banner',
+    '$55.00 CAD',
+    '36\" × 5\"'
+  )">
+  <div class="decal-image"></div>
+  <div class="decal-name">DS Cursive Banner</div>
+  <div class="decal-price">$55.00 CAD</div>
+</div>
 
-    <div class="decal-card" onclick="openModal('DS Grunge Banner', '50.00 CAD', '21\" x 9\"')">
-      <div class="decal-image"></div>
-      <div class="decal-name">DS Grunge Banner</div>
-      <div class="decal-price">$50.00 CAD</div>
-    </div>
+<div class="decal-card"
+  onclick="openModal(
+    'DS Grunge Banner',
+    '$50.00 CAD',
+    '21\" × 9\"'
+  )">
+  <div class="decal-image"></div>
+  <div class="decal-name">DS Grunge Banner</div>
+  <div class="decal-price">$50.00 CAD</div>
+</div>
 
-    <div class="decal-card" onclick="openModal('DS Gothic Banner', '55.00 CAD', '32\" x 4\"')">
-      <div class="decal-image"></div>
-      <div class="decal-name">DS Gothic Banner</div>
-      <div class="decal-price">$55.00 CAD</div>
-    </div>
+<div class="decal-card"
+  onclick="openModal(
+    'DS Gothic Banner',
+    '$55.00 CAD',
+    '32\" × 4\"'
+  )">
+  <div class="decal-image"></div>
+  <div class="decal-name">DS Gothic Banner</div>
+  <div class="decal-price">$55.00 CAD</div>
+</div>
+
 
   </div>
 </section>
@@ -280,26 +321,47 @@
     <p id="modalPrice"></p>
     <p id="modalSize"></p>
 
-    <div class="color-options">
-      <span>Black</span>
-      <span>White</span>
-      <span>Silver</span>
-    </div>
+   <div class="color-options" id="colorOptions">
+  <span onclick="selectColor(this)">Black</span>
+  <span onclick="selectColor(this)">White</span>
+  <span onclick="selectColor(this)">Silver</span>
+</div>
+
 
     <div class="close" onclick="closeModal()">Close</div>
   </div>
 </div>
 <script>
+ <script>
+  let selectedColor = null;
+
   function openModal(name, price, size) {
     document.getElementById('modalTitle').innerText = name;
     document.getElementById('modalPrice').innerText = price;
     document.getElementById('modalSize').innerText = "Size: " + size;
+
+    selectedColor = null;
+    resetColors();
+
     document.getElementById('productModal').classList.add('active');
   }
 
   function closeModal() {
     document.getElementById('productModal').classList.remove('active');
   }
+
+  function selectColor(element) {
+    resetColors();
+    element.classList.add('active');
+    selectedColor = element.innerText;
+  }
+
+  function resetColors() {
+    document.querySelectorAll('#colorOptions span')
+      .forEach(el => el.classList.remove('active'));
+  }
+</script>
+
 </script>
 </body>
 </html>
