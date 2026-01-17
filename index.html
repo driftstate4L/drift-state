@@ -12,8 +12,8 @@
 
     body {
       margin: 0;
-      background: black;
-      color: white;
+      background: #000;
+      color: #fff;
       font-family: Arial, sans-serif;
     }
 
@@ -26,83 +26,32 @@
       text-align: center;
       padding: 2rem;
     }
+    .brand { max-width: 780px; }
 
-    .brand {
-      max-width: 720px;
-    }
-
-    /* 3D LOGO WRAPPER */
-    .logo-3d-wrapper {
-      perspective: 1200px;
-      display: flex;
-      justify-content: center;
-      margin-bottom: 1.5rem;
+    /* Real 3D logo containers */
+    .logo3d-wrap {
+      width: 260px;
+      height: 260px;
+      margin: 0 auto 1.25rem;
       background: transparent;
+      display: grid;
+      place-items: center;
     }
-
-    /* The spinner rotates this whole object */
-    .logo-3d {
-      width: 220px;
-      height: 220px;
-      transform-style: preserve-3d;
-      animation: spin 10s linear infinite;
-    }
-
-    @keyframes spin {
-      from { transform: rotateY(0deg); }
-      to   { transform: rotateY(360deg); }
-    }
-
-    /*
-      Extruded logo stack:
-      - multiple layers behind = depth
-      - top layer gets chrome highlight
-    */
-    .logo-extrude {
-      position: relative;
+    .logo3d-canvas {
       width: 100%;
       height: 100%;
-      transform-style: preserve-3d;
-    }
-
-    .logo-extrude img {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
+      display: block;
       background: transparent;
-      user-select: none;
-      -webkit-user-drag: none;
-      pointer-events: none; /* important: logo never blocks clicks */
+      pointer-events: none; /* never blocks clicks */
     }
 
-    /* Back “thickness” layers (darker) */
-    .logo-extrude img.depth {
-      filter:
-        grayscale(100%)
-        brightness(0.55)
-        contrast(1.25)
-        drop-shadow(0 0 6px rgba(0,0,0,0.45));
-      opacity: 0.95;
-    }
-
-    /* Top “chrome” face */
-    .logo-extrude img.face {
-      filter:
-        grayscale(100%)
-        brightness(1.45)
-        contrast(1.55)
-        drop-shadow(0 0 18px rgba(255,255,255,0.35));
-    }
-
+    /* Text */
     .brand-name {
       font-family: 'UnifrakturCook', cursive;
       font-size: 4rem;
       letter-spacing: 6px;
       margin: 0.5rem 0;
     }
-
     .tagline {
       letter-spacing: 3px;
       opacity: 0.7;
@@ -114,14 +63,12 @@
       position: relative;
       z-index: 1;
     }
-
     .section-title {
       text-align: center;
       font-size: 2.5rem;
       letter-spacing: 6px;
       margin-bottom: 3rem;
     }
-
     .decals-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -129,36 +76,26 @@
       max-width: 1100px;
       margin: 0 auto;
     }
-
     .decal-card {
       border: 1px solid rgba(255,255,255,0.25);
       padding: 1.5rem;
       text-align: center;
       cursor: pointer;
       transition: transform 0.25s ease, box-shadow 0.25s ease;
-      background: black;
+      background: #000;
     }
-
     .decal-card:hover {
       transform: translateY(-6px);
       box-shadow: 0 0 30px rgba(255,255,255,0.15);
     }
-
     .decal-image {
       width: 100%;
       aspect-ratio: 1 / 1;
-      background: white;
+      background: #fff; /* placeholder white square */
       margin-bottom: 1rem;
     }
-
-    .decal-name {
-      letter-spacing: 2px;
-      margin-bottom: 0.3rem;
-    }
-
-    .decal-price {
-      opacity: 0.8;
-    }
+    .decal-name { letter-spacing: 2px; margin-bottom: 0.3rem; }
+    .decal-price { opacity: 0.8; }
 
     /* MODAL (cannot block clicks when closed) */
     .modal {
@@ -175,31 +112,33 @@
       pointer-events: none;
       transition: opacity 0.2s ease;
     }
-
     .modal.active {
       opacity: 1;
       pointer-events: auto;
     }
 
     .modal-content {
-      max-width: 600px;
+      max-width: 640px;
       width: 100%;
       text-align: center;
     }
 
+    .modal h2 { margin: 0.75rem 0 0.35rem; letter-spacing: 3px; }
+    .modal p { margin: 0.25rem 0; opacity: 0.85; }
+
+    .color-options { margin-top: 1.25rem; }
     .color-options span {
       display: inline-block;
-      border: 1px solid white;
+      border: 1px solid #fff;
       padding: 0.45rem 0.9rem;
       margin: 0.35rem;
       cursor: pointer;
       opacity: 0.7;
       user-select: none;
     }
-
     .color-options span.active {
-      background: white;
-      color: black;
+      background: #fff;
+      color: #000;
       opacity: 1;
     }
 
@@ -211,14 +150,25 @@
       padding: 0.6rem 1rem;
       border: 1px solid rgba(255,255,255,0.25);
     }
-
     .close:hover { opacity: 1; }
+
+    /* Fallback image if WebGL fails */
+    .fallback-img {
+      width: 220px;
+      height: 220px;
+      object-fit: contain;
+      display: none;
+      filter: grayscale(100%) brightness(1.35) contrast(1.45)
+        drop-shadow(0 0 18px rgba(255,255,255,0.35));
+    }
 
     footer {
       text-align: center;
       padding: 2rem;
       opacity: 0.6;
     }
+    footer a { color:#fff; text-decoration:none; }
+    footer a:hover { text-decoration:underline; }
   </style>
 </head>
 
@@ -227,11 +177,11 @@
   <!-- HERO -->
   <section class="hero">
     <div class="brand">
-      <div class="logo-3d-wrapper">
-        <div class="logo-3d">
-          <!-- 3D extruded logo gets generated here -->
-          <div class="logo-extrude" data-logo-3d></div>
-        </div>
+
+      <!-- REAL 3D LOGO (WebGL) -->
+      <div class="logo3d-wrap">
+        <canvas id="logo3dHero" class="logo3d-canvas"></canvas>
+        <img src="ds-logo.png" alt="DS Logo" class="fallback-img" id="fallbackHero">
       </div>
 
       <div class="brand-name">DRIFT STATE</div>
@@ -274,11 +224,10 @@
   <div class="modal" id="productModal" onclick="if(event.target.id==='productModal')closeModal()">
     <div class="modal-content">
 
-      <div class="logo-3d-wrapper">
-        <div class="logo-3d">
-          <!-- same extruded logo in modal -->
-          <div class="logo-extrude" data-logo-3d></div>
-        </div>
+      <!-- REAL 3D LOGO (WebGL) -->
+      <div class="logo3d-wrap" style="width:230px;height:230px;margin-top:0.25rem;">
+        <canvas id="logo3dModal" class="logo3d-canvas"></canvas>
+        <img src="ds-logo.png" alt="DS Logo" class="fallback-img" id="fallbackModal">
       </div>
 
       <h2 id="modalTitle"></h2>
@@ -296,48 +245,12 @@
   </div>
 
   <footer>
-    © Drift State
+    <div><a href="mailto:volzmain05@gmail.com">volzmain05@gmail.com</a></div>
+    <div>© Drift State</div>
   </footer>
 
+  <!-- App logic (modal + colors) -->
   <script>
-    // === SETTINGS YOU CAN TWEAK ===
-    const LOGO_SRC = "ds-logo.png";
-    const DEPTH_LAYERS = 14;     // more layers = thicker
-    const DEPTH_SPACING = 1.2;   // px spacing between layers
-    const DEPTH_OFFSET = 0.35;   // subtle x/y offset per layer for thickness feel
-
-    // Build a layered (extruded) logo inside every [data-logo-3d] container
-    function buildExtrudedLogo(el) {
-      el.innerHTML = "";
-
-      // Create depth layers behind (farthest first)
-      for (let i = DEPTH_LAYERS; i >= 1; i--) {
-        const img = document.createElement("img");
-        img.className = "depth";
-        img.src = LOGO_SRC;
-        img.alt = "DS Logo Depth";
-
-        // Push backward in Z to create thickness
-        const z = -(i * DEPTH_SPACING);
-        const xy = i * DEPTH_OFFSET;
-
-        img.style.transform = `translateZ(${z}px) translate(${xy}px, ${xy}px)`;
-        img.style.opacity = String(0.12 + (i / DEPTH_LAYERS) * 0.18); // subtle depth
-        el.appendChild(img);
-      }
-
-      // Top face (chrome)
-      const face = document.createElement("img");
-      face.className = "face";
-      face.src = LOGO_SRC;
-      face.alt = "DS Logo";
-      face.style.transform = "translateZ(0px)";
-      el.appendChild(face);
-    }
-
-    document.querySelectorAll("[data-logo-3d]").forEach(buildExtrudedLogo);
-
-    // === PRODUCT MODAL LOGIC ===
     let selectedColor = null;
 
     function openModal(name, price, size) {
@@ -360,6 +273,162 @@
       el.classList.add('active');
       selectedColor = el.innerText;
     }
+  </script>
+
+  <!-- Real 3D (Three.js) -->
+  <script type="module">
+    import * as THREE from "https://unpkg.com/three@0.161.0/build/three.module.js";
+    import { RoomEnvironment } from "https://unpkg.com/three@0.161.0/examples/jsm/environments/RoomEnvironment.js";
+
+    const LOGO_SRC = "ds-logo.png";
+
+    function showFallback(canvasId, imgId) {
+      const c = document.getElementById(canvasId);
+      const img = document.getElementById(imgId);
+      if (c) c.style.display = "none";
+      if (img) img.style.display = "block";
+    }
+
+    function create3DLogo(canvasId, fallbackImgId) {
+      const canvas = document.getElementById(canvasId);
+      if (!canvas) return null;
+
+      // WebGL support check
+      const gl = canvas.getContext("webgl2") || canvas.getContext("webgl");
+      if (!gl) { showFallback(canvasId, fallbackImgId); return null; }
+
+      const renderer = new THREE.WebGLRenderer({
+        canvas,
+        alpha: true,
+        antialias: true,
+        powerPreference: "high-performance"
+      });
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+      renderer.setClearColor(0x000000, 0); // transparent
+
+      const scene = new THREE.Scene();
+
+      // Camera
+      const camera = new THREE.PerspectiveCamera(35, 1, 0.1, 100);
+      camera.position.set(0, 0.2, 4);
+
+      // Lighting
+      const key = new THREE.DirectionalLight(0xffffff, 2.2);
+      key.position.set(3, 4, 5);
+      scene.add(key);
+
+      const fill = new THREE.DirectionalLight(0xffffff, 0.9);
+      fill.position.set(-3, 1, 4);
+      scene.add(fill);
+
+      const rim = new THREE.DirectionalLight(0xffffff, 1.2);
+      rim.position.set(0, 3, -5);
+      scene.add(rim);
+
+      // Procedural environment for reflections (no external HDR needed)
+      const pmrem = new THREE.PMREMGenerator(renderer);
+      const envTex = pmrem.fromScene(new RoomEnvironment(renderer), 0.04).texture;
+      scene.environment = envTex;
+
+      // Group (our “real 3D object”)
+      const group = new THREE.Group();
+      scene.add(group);
+
+      // A real 3D base “coin” (cylinder) for true depth
+      const baseGeo = new THREE.CylinderGeometry(1.2, 1.2, 0.22, 64, 1, true);
+      const chrome = new THREE.MeshPhysicalMaterial({
+        color: 0xffffff,
+        metalness: 1,
+        roughness: 0.08,
+        clearcoat: 1,
+        clearcoatRoughness: 0.08,
+        envMapIntensity: 1.6
+      });
+      const base = new THREE.Mesh(baseGeo, chrome);
+      base.rotation.x = Math.PI / 2; // face camera (cylinder axis toward camera)
+      group.add(base);
+
+      // Front/back plates with your logo as a texture (with alpha)
+      const loader = new THREE.TextureLoader();
+      const logoTex = loader.load(
+        LOGO_SRC,
+        () => { /* loaded */ },
+        undefined,
+        () => { showFallback(canvasId, fallbackImgId); }
+      );
+      logoTex.colorSpace = THREE.SRGBColorSpace;
+
+      const faceMat = new THREE.MeshPhysicalMaterial({
+        color: 0xffffff,
+        metalness: 1,
+        roughness: 0.12,
+        clearcoat: 1,
+        clearcoatRoughness: 0.12,
+        envMapIntensity: 1.8,
+        map: logoTex,
+        transparent: true,
+        alphaTest: 0.35 // makes the transparent parts cut cleanly
+      });
+
+      const plateGeo = new THREE.CircleGeometry(1.12, 64);
+
+      const front = new THREE.Mesh(plateGeo, faceMat);
+      front.position.z = 0.12; // just above the coin face
+      group.add(front);
+
+      const back = new THREE.Mesh(plateGeo, faceMat);
+      back.rotation.y = Math.PI;
+      back.position.z = -0.12;
+      group.add(back);
+
+      // Small bevel ring (adds “machined” edge)
+      const ringGeo = new THREE.TorusGeometry(1.18, 0.04, 16, 100);
+      const ring = new THREE.Mesh(ringGeo, chrome);
+      ring.rotation.x = Math.PI / 2;
+      group.add(ring);
+
+      // Initial tilt for a more 3D look
+      group.rotation.x = 0.25;
+      group.rotation.y = 0.25;
+
+      function resize() {
+        const rect = canvas.getBoundingClientRect();
+        const w = Math.max(1, Math.floor(rect.width));
+        const h = Math.max(1, Math.floor(rect.height));
+        renderer.setSize(w, h, false);
+        camera.aspect = w / h;
+        camera.updateProjectionMatrix();
+      }
+      resize();
+
+      let alive = true;
+      function animate() {
+        if (!alive) return;
+        group.rotation.y += 0.01; // spin
+        renderer.render(scene, camera);
+        requestAnimationFrame(animate);
+      }
+      animate();
+
+      // Keep it responsive
+      const ro = new ResizeObserver(resize);
+      ro.observe(canvas);
+
+      return {
+        dispose() {
+          alive = false;
+          ro.disconnect();
+          renderer.dispose();
+          pmrem.dispose();
+          if (envTex) envTex.dispose();
+          if (logoTex) logoTex.dispose();
+        }
+      };
+    }
+
+    // Build both logos
+    create3DLogo("logo3dHero", "fallbackHero");
+    create3DLogo("logo3dModal", "fallbackModal");
   </script>
 
 </body>
