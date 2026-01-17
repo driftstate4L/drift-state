@@ -4,122 +4,114 @@
   <meta charset="UTF-8" />
   <title>Drift State</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <!-- Gothic Font -->
   <link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&display=swap" rel="stylesheet">
 
   <style>
     * { box-sizing: border-box; }
 
-    body {
-      margin: 0;
-      background: black;
-      color: white;
+    body{
+      margin:0;
+      background:#000;
+      color:#fff;
       font-family: Arial, sans-serif;
     }
 
     /* HERO */
-    .hero {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 2rem;
+    .hero{
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      padding:2rem;
     }
+    .brand{ max-width:760px; }
 
-    .brand { max-width: 700px; }
-
-    /* 3D LOGO */
-    .logo-3d-wrapper {
+    /* 3D spinning logo (transparent bg) */
+    .logo-3d-wrapper{
       perspective: 1000px;
-      display: flex;
-      justify-content: center;
-      margin-bottom: 2rem;
+      display:flex;
+      justify-content:center;
+      margin: 0 auto 1.5rem;
       background: transparent;
     }
-
-    .logo-3d {
-      width: 220px;
-      height: 220px;
-      transform-style: preserve-3d;
+    .logo-3d{
+      width:220px;
+      height:220px;
+      transform-style:preserve-3d;
       animation: spin 10s linear infinite;
     }
-
-    .logo-3d img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      filter: grayscale(100%) brightness(1.3) contrast(1.4)
-        drop-shadow(0 0 20px rgba(255,255,255,0.4));
+    .logo-3d img{
+      width:100%;
+      height:100%;
+      object-fit:contain;
+      /* chrome-ish treatment */
+      filter: grayscale(100%) brightness(1.35) contrast(1.45)
+        drop-shadow(0 0 18px rgba(255,255,255,0.35));
+      background: transparent; /* ensure no box bg */
     }
-
-    @keyframes spin {
+    @keyframes spin{
       from { transform: rotateY(0deg); }
-      to { transform: rotateY(360deg); }
+      to   { transform: rotateY(360deg); }
     }
 
-    .logo-text {
-      font-family: 'UnifrakturCook', cursive;
+    .brand-name{
+      font-family:'UnifrakturCook', cursive;
       font-size: 4rem;
       letter-spacing: 6px;
-      margin-bottom: 0.5rem;
+      margin: 0.25rem 0 0.5rem;
     }
-
-    .tagline {
+    .tagline{
       letter-spacing: 3px;
       opacity: 0.7;
+      margin: 0;
     }
 
-    /* DECALS */
-    .decals-section {
-      padding: 5rem 2rem;
+    /* DECALS SECTION */
+    .decals-section{
+      padding: 5rem 2rem 4rem;
     }
-
-    .section-title {
-      text-align: center;
+    .section-title{
+      text-align:center;
       font-size: 2.5rem;
       letter-spacing: 6px;
-      margin-bottom: 3rem;
+      margin: 0 0 3rem;
     }
-
-    .decals-grid {
-      display: grid;
+    .decals-grid{
+      display:grid;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
       gap: 2rem;
       max-width: 1100px;
       margin: 0 auto;
     }
-
-    .decal-card {
+    .decal-card{
       border: 1px solid rgba(255,255,255,0.25);
       padding: 1.5rem;
-      text-align: center;
-      cursor: pointer;
-      transition: 0.3s;
+      text-align:center;
+      cursor:pointer;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
     }
-
-    .decal-card:hover {
+    .decal-card:hover{
       transform: translateY(-6px);
       box-shadow: 0 0 30px rgba(255,255,255,0.15);
     }
-
-    .decal-image {
-      width: 100%;
-      aspect-ratio: 1 / 1;
-      background: white;
+    .decal-image{
+      width:100%;
+      aspect-ratio: 1/1;
+      background:#fff; /* placeholder white square */
       margin-bottom: 1rem;
     }
-
-    .decal-name {
+    .decal-name{
       letter-spacing: 2px;
-      margin-bottom: 0.4rem;
+      margin: 0.25rem 0 0.4rem;
+    }
+    .decal-price{
+      opacity: 0.85;
+      margin: 0;
     }
 
-    .decal-price { opacity: 0.8; }
-
     /* MODAL */
-    .modal {
+    .modal{
       position: fixed;
       inset: 0;
       background: rgba(0,0,0,0.95);
@@ -128,45 +120,72 @@
       align-items: flex-start;
       overflow-y: auto;
       z-index: 999;
+      padding: 2rem 1rem;
+    }
+    .modal.active{ display:flex; }
+
+    .modal-content{
+      width: 100%;
+      max-width: 640px;
+      text-align:center;
+      padding: 2.5rem 1.5rem 2rem;
     }
 
-    .modal.active { display: flex; }
-
-    .modal-content {
-      max-width: 600px;
-      padding: 3rem 2rem;
-      text-align: center;
+    .modal h2{
+      letter-spacing: 3px;
+      margin: 0.75rem 0 0.5rem;
+    }
+    .modal p{
+      margin: 0.25rem 0;
+      opacity: 0.85;
     }
 
-    .color-options span {
-      display: inline-block;
-      border: 1px solid white;
-      padding: 0.45rem 0.9rem;
+    .color-options{
+      margin-top: 1.25rem;
+    }
+    .color-options span{
+      display:inline-block;
+      border: 1px solid #fff;
+      padding: 0.5rem 0.95rem;
       margin: 0.35rem;
-      cursor: pointer;
-      font-size: 0.8rem;
+      cursor:pointer;
+      font-size: 0.85rem;
       opacity: 0.7;
-      transition: 0.25s;
+      transition: 0.2s;
+      user-select:none;
     }
-
-    .color-options span.active {
-      background: white;
-      color: black;
+    .color-options span:hover{ opacity: 1; }
+    .color-options span.active{
+      background:#fff;
+      color:#000;
       opacity: 1;
     }
 
-    .close {
-      margin-top: 2rem;
-      opacity: 0.6;
-      cursor: pointer;
+    .selected-line{
+      margin-top: 0.8rem;
+      font-size: 0.9rem;
+      opacity: 0.85;
+      min-height: 1.2em; /* keeps layout stable */
     }
 
-    footer {
-      text-align: center;
-      padding: 2rem;
-      font-size: 0.85rem;
+    .close{
+      margin-top: 1.6rem;
+      opacity: 0.65;
+      cursor:pointer;
+      display:inline-block;
+      padding: 0.6rem 1rem;
+      border: 1px solid rgba(255,255,255,0.25);
+    }
+    .close:hover{ opacity: 1; }
+
+    footer{
+      text-align:center;
+      padding: 2rem 1rem 3rem;
+      font-size: 0.9rem;
       opacity: 0.6;
     }
+    footer a{ color:#fff; text-decoration:none; }
+    footer a:hover{ text-decoration:underline; }
   </style>
 </head>
 
@@ -177,49 +196,54 @@
     <div class="brand">
       <div class="logo-3d-wrapper">
         <div class="logo-3d">
-          <img src="ds-logo.png" alt="DS Logo">
+          <!-- IMPORTANT: this file must exist in the repo root -->
+          <img src="ds-logo.png" alt="Drift State DS Logo">
         </div>
       </div>
-      <div class="logo-text">DRIFT STATE</div>
-      <div class="tagline">GOTHIC • STREET • GRUNGE</div>
+
+      <div class="brand-name">DRIFT STATE</div>
+      <p class="tagline">GOTHIC • STREET • GRUNGE</p>
     </div>
   </section>
 
   <!-- DECALS -->
   <section class="decals-section">
     <div class="section-title">DECALS</div>
+
     <div class="decals-grid">
+      <div class="decal-card" onclick="openModal('DS Corner Banner', '45.00', 'CAD', '16\" × 8\"')">
+        <div class="decal-image"></div>
+        <div class="decal-name">DS Corner Banner</div>
+        <p class="decal-price">$45.00 CAD</p>
+      </div>
 
-     driftstate.shop
-
-      <div class="decal-card" onclick="alert('JS IS WORKING')">
+      <div class="decal-card" onclick="openModal('DS Cursive Banner', '55.00', 'CAD', '36\" × 5\"')">
         <div class="decal-image"></div>
         <div class="decal-name">DS Cursive Banner</div>
-        <div class="decal-price">$55.00 CAD</div>
+        <p class="decal-price">$55.00 CAD</p>
       </div>
 
-      <div class="decal-card" onclick="openModal('DS Grunge Banner','$50.00 CAD','21\" × 9\"')">
+      <div class="decal-card" onclick="openModal('DS Grunge Banner', '50.00', 'CAD', '21\" × 9\"')">
         <div class="decal-image"></div>
         <div class="decal-name">DS Grunge Banner</div>
-        <div class="decal-price">$50.00 CAD</div>
+        <p class="decal-price">$50.00 CAD</p>
       </div>
 
-      <div class="decal-card" onclick="openModal('DS Gothic Banner','$55.00 CAD','32\" × 4\"')">
+      <div class="decal-card" onclick="openModal('DS Gothic Banner', '55.00', 'CAD', '32\" × 4\"')">
         <div class="decal-image"></div>
         <div class="decal-name">DS Gothic Banner</div>
-        <div class="decal-price">$55.00 CAD</div>
+        <p class="decal-price">$55.00 CAD</p>
       </div>
-
     </div>
   </section>
 
-  <!-- MODAL -->
-  <div class="modal" id="productModal">
+  <!-- PRODUCT MODAL -->
+  <div class="modal" id="productModal" onclick="modalBackdropClose(event)">
     <div class="modal-content">
-
+      <!-- Spinning logo top-center -->
       <div class="logo-3d-wrapper">
         <div class="logo-3d">
-          <img src="ds-logo.png" alt="DS Logo">
+          <img src="ds-logo.png" alt="Drift State DS Logo">
         </div>
       </div>
 
@@ -228,30 +252,38 @@
       <p id="modalSize"></p>
 
       <div class="color-options" id="colorOptions">
-        <span onclick="selectColor(this)">Black</span>
-        <span onclick="selectColor(this)">White</span>
-        <span onclick="selectColor(this)">Silver</span>
+        <span data-color="Black" onclick="selectColor(this)">Black</span>
+        <span data-color="White" onclick="selectColor(this)">White</span>
+        <span data-color="Silver" onclick="selectColor(this)">Silver</span>
       </div>
+
+      <div class="selected-line" id="selectedLine"></div>
 
       <div class="close" onclick="closeModal()">Close</div>
     </div>
   </div>
 
   <footer>
-    <p>© Drift State</p>
+    <div><a href="mailto:volzmain05@gmail.com">volzmain05@gmail.com</a></div>
+    <div>© Drift State</div>
   </footer>
 
-  <!-- SCRIPT -->
   <script>
+    // Current selection state (ready for cart later)
     let selectedColor = null;
+    let currentProduct = null;
 
-    function openModal(name, price, size) {
-      document.getElementById('modalTitle').innerText = name;
-      document.getElementById('modalPrice').innerText = price;
-      document.getElementById('modalSize').innerText = "Size: " + size;
+    function openModal(name, priceNumber, currency, size) {
+      currentProduct = { name, priceNumber, currency, size };
+
+      document.getElementById('modalTitle').textContent = name;
+      document.getElementById('modalPrice').textContent = `$${Number(priceNumber).toFixed(2)} ${currency}`;
+      document.getElementById('modalSize').textContent = `Size: ${size}`;
 
       selectedColor = null;
       resetColors();
+      updateSelectedLine();
+
       document.getElementById('productModal').classList.add('active');
     }
 
@@ -259,15 +291,33 @@
       document.getElementById('productModal').classList.remove('active');
     }
 
+    // Close when clicking the dark backdrop (but not when clicking the content)
+    function modalBackdropClose(e) {
+      if (e.target && e.target.id === 'productModal') closeModal();
+    }
+
     function selectColor(el) {
       resetColors();
       el.classList.add('active');
-      selectedColor = el.innerText;
+      selectedColor = el.getAttribute('data-color') || el.textContent;
+      updateSelectedLine();
     }
 
     function resetColors() {
-      document.querySelectorAll('#colorOptions span')
-        .forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('#colorOptions span').forEach(s => s.classList.remove('active'));
+    }
+
+    function updateSelectedLine() {
+      const line = document.getElementById('selectedLine');
+      if (!currentProduct) {
+        line.textContent = '';
+        return;
+      }
+      if (!selectedColor) {
+        line.textContent = 'Select a color: Black, White, or Silver.';
+        return;
+      }
+      line.textContent = `Selected: ${currentProduct.name} — ${selectedColor} — $${Number(currentProduct.priceNumber).toFixed(2)} ${currentProduct.currency}`;
     }
   </script>
 
