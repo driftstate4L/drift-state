@@ -31,15 +31,16 @@
       max-width: 720px;
     }
 
-    /* 3D LOGO */
+    /* 3D LOGO WRAPPER */
     .logo-3d-wrapper {
-      perspective: 1000px;
+      perspective: 1200px;
       display: flex;
       justify-content: center;
       margin-bottom: 1.5rem;
       background: transparent;
     }
 
+    /* The spinner rotates this whole object */
     .logo-3d {
       width: 220px;
       height: 220px;
@@ -47,18 +48,52 @@
       animation: spin 10s linear infinite;
     }
 
-    .logo-3d img {
+    @keyframes spin {
+      from { transform: rotateY(0deg); }
+      to   { transform: rotateY(360deg); }
+    }
+
+    /*
+      Extruded logo stack:
+      - multiple layers behind = depth
+      - top layer gets chrome highlight
+    */
+    .logo-extrude {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transform-style: preserve-3d;
+    }
+
+    .logo-extrude img {
+      position: absolute;
+      inset: 0;
       width: 100%;
       height: 100%;
       object-fit: contain;
       background: transparent;
-      filter: grayscale(100%) brightness(1.35) contrast(1.45)
-        drop-shadow(0 0 18px rgba(255,255,255,0.35));
+      user-select: none;
+      -webkit-user-drag: none;
+      pointer-events: none; /* important: logo never blocks clicks */
     }
 
-    @keyframes spin {
-      from { transform: rotateY(0deg); }
-      to   { transform: rotateY(360deg); }
+    /* Back “thickness” layers (darker) */
+    .logo-extrude img.depth {
+      filter:
+        grayscale(100%)
+        brightness(0.55)
+        contrast(1.25)
+        drop-shadow(0 0 6px rgba(0,0,0,0.45));
+      opacity: 0.95;
+    }
+
+    /* Top “chrome” face */
+    .logo-extrude img.face {
+      filter:
+        grayscale(100%)
+        brightness(1.45)
+        contrast(1.55)
+        drop-shadow(0 0 18px rgba(255,255,255,0.35));
     }
 
     .brand-name {
@@ -77,7 +112,7 @@
     .decals-section {
       padding: 5rem 2rem;
       position: relative;
-      z-index: 1; /* stays clickable */
+      z-index: 1;
     }
 
     .section-title {
@@ -159,6 +194,7 @@
       margin: 0.35rem;
       cursor: pointer;
       opacity: 0.7;
+      user-select: none;
     }
 
     .color-options span.active {
@@ -171,7 +207,12 @@
       margin-top: 2rem;
       cursor: pointer;
       opacity: 0.6;
+      display: inline-block;
+      padding: 0.6rem 1rem;
+      border: 1px solid rgba(255,255,255,0.25);
     }
+
+    .close:hover { opacity: 1; }
 
     footer {
       text-align: center;
@@ -188,9 +229,11 @@
     <div class="brand">
       <div class="logo-3d-wrapper">
         <div class="logo-3d">
-          <img src="ds-logo.png" alt="DS Logo">
+          <!-- 3D extruded logo gets generated here -->
+          <div class="logo-extrude" data-logo-3d></div>
         </div>
       </div>
+
       <div class="brand-name">DRIFT STATE</div>
       <div class="tagline">GOTHIC • STREET • GRUNGE</div>
     </div>
@@ -233,7 +276,8 @@
 
       <div class="logo-3d-wrapper">
         <div class="logo-3d">
-          <img src="ds-logo.png" alt="DS Logo">
+          <!-- same extruded logo in modal -->
+          <div class="logo-extrude" data-logo-3d></div>
         </div>
       </div>
 
@@ -256,6 +300,44 @@
   </footer>
 
   <script>
+    // === SETTINGS YOU CAN TWEAK ===
+    const LOGO_SRC = "ds-logo.png";
+    const DEPTH_LAYERS = 14;     // more layers = thicker
+    const DEPTH_SPACING = 1.2;   // px spacing between layers
+    const DEPTH_OFFSET = 0.35;   // subtle x/y offset per layer for thickness feel
+
+    // Build a layered (extruded) logo inside every [data-logo-3d] container
+    function buildExtrudedLogo(el) {
+      el.innerHTML = "";
+
+      // Create depth layers behind (farthest first)
+      for (let i = DEPTH_LAYERS; i >= 1; i--) {
+        const img = document.createElement("img");
+        img.className = "depth";
+        img.src = LOGO_SRC;
+        img.alt = "DS Logo Depth";
+
+        // Push backward in Z to create thickness
+        const z = -(i * DEPTH_SPACING);
+        const xy = i * DEPTH_OFFSET;
+
+        img.style.transform = `translateZ(${z}px) translate(${xy}px, ${xy}px)`;
+        img.style.opacity = String(0.12 + (i / DEPTH_LAYERS) * 0.18); // subtle depth
+        el.appendChild(img);
+      }
+
+      // Top face (chrome)
+      const face = document.createElement("img");
+      face.className = "face";
+      face.src = LOGO_SRC;
+      face.alt = "DS Logo";
+      face.style.transform = "translateZ(0px)";
+      el.appendChild(face);
+    }
+
+    document.querySelectorAll("[data-logo-3d]").forEach(buildExtrudedLogo);
+
+    // === PRODUCT MODAL LOGIC ===
     let selectedColor = null;
 
     function openModal(name, price, size) {
