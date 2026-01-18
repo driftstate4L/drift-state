@@ -25,6 +25,7 @@
       justify-content: center;
       text-align: center;
       padding: 2rem;
+      position: relative;
     }
     .brand { max-width: 720px; }
 
@@ -126,7 +127,27 @@
     }
 
     .decal-name { letter-spacing: 2px; margin-bottom: 0.3rem; }
-    .decal-price { opacity: 0.85; }
+    .decal-price { opacity: 0.85; margin-bottom: 0.9rem; }
+
+    .btn {
+      display: inline-block;
+      border: 1px solid rgba(255,255,255,0.35);
+      background: transparent;
+      color: white;
+      padding: 0.65rem 1rem;
+      cursor: pointer;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+      font-size: 0.95rem;
+      letter-spacing: 1px;
+    }
+    .btn:hover { opacity: 0.9; transform: translateY(-1px); }
+    .btn:active { transform: translateY(0px); }
+
+    .btn-primary {
+      border-color: rgba(255,255,255,0.65);
+    }
 
     /* MODAL OVERLAY */
     .modal {
@@ -212,6 +233,188 @@
       padding: 2rem;
       opacity: 0.6;
     }
+
+    /* CART BUTTON (floating) */
+    .cart-fab {
+      position: fixed;
+      right: 16px;
+      bottom: 16px;
+      z-index: 1200;
+      border: 1px solid rgba(255,255,255,0.5);
+      background: rgba(0,0,0,0.75);
+      color: white;
+      padding: 0.85rem 1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+      backdrop-filter: blur(6px);
+    }
+    .cart-count {
+      min-width: 22px;
+      height: 22px;
+      border: 1px solid rgba(255,255,255,0.6);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      padding: 0 6px;
+    }
+
+    /* CART DRAWER */
+    .cart-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.75);
+      z-index: 1400;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+    }
+    .cart-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .cart-drawer {
+      position: absolute;
+      right: 0;
+      top: 0;
+      height: 100%;
+      width: min(420px, 100%);
+      background: rgba(0,0,0,0.92);
+      border-left: 1px solid rgba(255,255,255,0.15);
+      display: flex;
+      flex-direction: column;
+      padding: 16px;
+    }
+
+    .cart-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(255,255,255,0.15);
+      margin-bottom: 12px;
+    }
+
+    .cart-title {
+      letter-spacing: 3px;
+      font-size: 1.1rem;
+      opacity: 0.95;
+    }
+
+    .cart-items {
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      padding-right: 4px;
+      flex: 1;
+    }
+
+    .cart-item {
+      border: 1px solid rgba(255,255,255,0.12);
+      padding: 12px;
+      margin-bottom: 12px;
+      display: grid;
+      grid-template-columns: 72px 1fr;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .cart-thumb {
+      width: 72px;
+      height: 54px;
+      border: 1px solid rgba(255,255,255,0.15);
+      background: rgba(255,255,255,0.04);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .cart-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .cart-meta {
+      text-align: left;
+    }
+    .cart-meta .name {
+      font-size: 0.98rem;
+      letter-spacing: 1px;
+      margin-bottom: 2px;
+    }
+    .cart-meta .variant {
+      font-size: 0.85rem;
+      opacity: 0.75;
+      margin-bottom: 6px;
+    }
+    .cart-meta .price {
+      font-size: 0.9rem;
+      opacity: 0.9;
+      margin-bottom: 8px;
+    }
+
+    .qty-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .qty-btn {
+      border: 1px solid rgba(255,255,255,0.35);
+      background: transparent;
+      color: white;
+      width: 34px;
+      height: 34px;
+      cursor: pointer;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .qty {
+      min-width: 34px;
+      text-align: center;
+      opacity: 0.95;
+    }
+
+    .remove-btn {
+      border: 1px solid rgba(255,255,255,0.25);
+      background: transparent;
+      color: white;
+      padding: 0.45rem 0.7rem;
+      cursor: pointer;
+      opacity: 0.85;
+    }
+    .remove-btn:hover { opacity: 1; }
+
+    .cart-footer {
+      border-top: 1px solid rgba(255,255,255,0.15);
+      padding-top: 12px;
+      margin-top: 12px;
+    }
+
+    .totals {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      letter-spacing: 1px;
+      margin-bottom: 10px;
+      opacity: 0.95;
+    }
+
+    .checkout-note {
+      font-size: 0.85rem;
+      opacity: 0.65;
+      line-height: 1.35;
+      margin-top: 10px;
+    }
   </style>
 </head>
 
@@ -221,54 +424,78 @@
   <div class="brand">
     <div class="logo-3d-wrapper">
       <div class="logo-3d">
-        <img src="ds-logo-v2.png?v=12" alt="DS Logo">
+        <img src="ds-logo-v2.png?v=20" alt="DS Logo">
       </div>
     </div>
 
-    <!-- ✅ TEXT CHANGED HERE -->
     <div class="brand-name">𝖘𝖍𝖔𝖕 𝖇𝖊𝖑𝖔𝖜</div>
     <div class="tagline">↓</div>
   </div>
 </section>
 
-<section class="decals-section">
+<section class="decals-section" id="decals">
   <div class="section-title">DECALS</div>
 
   <div class="decals-grid">
 
-    <div class="decal-card" data-name="DS Corner Banner" data-price="$45.00 CAD" data-size="16&quot; × 8&quot;" data-img="decal-ds-corner.png?v=12">
-      <div class="decal-image"><img src="decal-ds-corner.png?v=12" alt=""></div>
+    <div class="decal-card"
+      data-id="corner"
+      data-name="DS Corner Banner"
+      data-price="45.00"
+      data-size="16&quot; × 8&quot;"
+      data-img="decal-ds-corner.png?v=20">
+      <div class="decal-image"><img src="decal-ds-corner.png?v=20" alt=""></div>
       <div class="decal-name">DS Corner Banner</div>
       <div class="decal-price">$45.00 CAD</div>
+      <button class="btn btn-primary add-to-cart" type="button">Add to Cart</button>
     </div>
 
-    <div class="decal-card" data-name="DS Cursive Banner" data-price="$55.00 CAD" data-size="36&quot; × 5&quot;" data-img="decal-ds-cursive.png?v=12">
-      <div class="decal-image"><img src="decal-ds-cursive.png?v=12" alt=""></div>
+    <div class="decal-card"
+      data-id="cursive"
+      data-name="DS Cursive Banner"
+      data-price="55.00"
+      data-size="36&quot; × 5&quot;"
+      data-img="decal-ds-cursive.png?v=20">
+      <div class="decal-image"><img src="decal-ds-cursive.png?v=20" alt=""></div>
       <div class="decal-name">DS Cursive Banner</div>
       <div class="decal-price">$55.00 CAD</div>
+      <button class="btn btn-primary add-to-cart" type="button">Add to Cart</button>
     </div>
 
-    <div class="decal-card" data-name="DS Grunge Banner" data-price="$50.00 CAD" data-size="21&quot; × 9&quot;" data-img="decal-ds-grunge.png?v=12">
-      <div class="decal-image"><img src="decal-ds-grunge.png?v=12" alt=""></div>
+    <div class="decal-card"
+      data-id="grunge"
+      data-name="DS Grunge Banner"
+      data-price="50.00"
+      data-size="21&quot; × 9&quot;"
+      data-img="decal-ds-grunge.png?v=20">
+      <div class="decal-image"><img src="decal-ds-grunge.png?v=20" alt=""></div>
       <div class="decal-name">DS Grunge Banner</div>
       <div class="decal-price">$50.00 CAD</div>
+      <button class="btn btn-primary add-to-cart" type="button">Add to Cart</button>
     </div>
 
-    <div class="decal-card" data-name="DS Gothic Banner" data-price="$55.00 CAD" data-size="32&quot; × 4&quot;" data-img="decal-ds-gothic.png?v=12">
-      <div class="decal-image"><img src="decal-ds-gothic.png?v=12" alt=""></div>
+    <div class="decal-card"
+      data-id="gothic"
+      data-name="DS Gothic Banner"
+      data-price="55.00"
+      data-size="32&quot; × 4&quot;"
+      data-img="decal-ds-gothic.png?v=20">
+      <div class="decal-image"><img src="decal-ds-gothic.png?v=20" alt=""></div>
       <div class="decal-name">DS Gothic Banner</div>
       <div class="decal-price">$55.00 CAD</div>
+      <button class="btn btn-primary add-to-cart" type="button">Add to Cart</button>
     </div>
 
   </div>
 </section>
 
+<!-- PRODUCT MODAL (tap decal card to open) -->
 <div class="modal" id="productModal">
   <div class="modal-content" id="modalContent">
 
     <div class="logo-3d-wrapper">
       <div class="logo-3d">
-        <img src="ds-logo-v2.png?v=12" alt="DS Logo">
+        <img src="ds-logo-v2.png?v=20" alt="DS Logo">
       </div>
     </div>
 
@@ -286,13 +513,74 @@
       <span>Silver</span>
     </div>
 
+    <div style="margin-top:12px;">
+      <button class="btn btn-primary" id="modalAddBtn" type="button">Add to Cart</button>
+    </div>
+
     <div class="close" id="closeBtn">Close</div>
+  </div>
+</div>
+
+<!-- CART FAB -->
+<div class="cart-fab" id="cartFab" role="button" aria-label="Open cart">
+  <span>CART</span>
+  <span class="cart-count" id="cartCount">0</span>
+</div>
+
+<!-- CART DRAWER -->
+<div class="cart-overlay" id="cartOverlay">
+  <div class="cart-drawer" role="dialog" aria-label="Cart drawer">
+    <div class="cart-header">
+      <div class="cart-title">CART</div>
+      <button class="btn" id="closeCartBtn" type="button">Close</button>
+    </div>
+
+    <div class="cart-items" id="cartItems"></div>
+
+    <div class="cart-footer">
+      <div class="totals">
+        <div>Total</div>
+        <div id="cartTotal">$0.00 CAD</div>
+      </div>
+
+      <button class="btn btn-primary" id="fakeCheckoutBtn" type="button" style="width:100%;">Checkout (Coming Soon)</button>
+
+      <div class="checkout-note">
+        This cart works right now. When you're ready to accept payments, we can connect real checkout (Shopify / Stripe).
+      </div>
+    </div>
   </div>
 </div>
 
 <footer>© Drift State</footer>
 
 <script>
+  // ---------- Utilities ----------
+  function moneyCAD(num) {
+    const n = Number(num || 0);
+    return `$${n.toFixed(2)} CAD`;
+  }
+
+  function loadCart() {
+    try {
+      const raw = localStorage.getItem('ds_cart_v1');
+      return raw ? JSON.parse(raw) : [];
+    } catch {
+      return [];
+    }
+  }
+
+  function saveCart(cart) {
+    localStorage.setItem('ds_cart_v1', JSON.stringify(cart));
+  }
+
+  // Cart item shape:
+  // { key, id, name, price, img, color, qty }
+  // key includes id + color so variants are separate lines.
+
+  let cart = loadCart();
+
+  // ---------- Elements ----------
   const modal = document.getElementById('productModal');
   const modalContent = document.getElementById('modalContent');
   const modalTitle = document.getElementById('modalTitle');
@@ -301,41 +589,199 @@
   const modalImg = document.getElementById('modalProductImg');
   const closeBtn = document.getElementById('closeBtn');
   const colorOptions = document.getElementById('colorOptions');
+  const modalAddBtn = document.getElementById('modalAddBtn');
 
+  const cartFab = document.getElementById('cartFab');
+  const cartCount = document.getElementById('cartCount');
+  const cartOverlay = document.getElementById('cartOverlay');
+  const closeCartBtn = document.getElementById('closeCartBtn');
+  const cartItemsEl = document.getElementById('cartItems');
+  const cartTotalEl = document.getElementById('cartTotal');
+
+  let currentProduct = null; // for modal add-to-cart
+  let selectedColor = null;
+
+  // ---------- Product Modal ----------
   function openModalFromCard(card) {
-    modalTitle.innerText = card.dataset.name;
-    modalPrice.innerText = card.dataset.price;
-    modalSize.innerText = "Size: " + card.dataset.size;
-    modalImg.src = card.dataset.img;
-    modalImg.alt = card.dataset.name;
+    const name = card.dataset.name;
+    const price = Number(card.dataset.price);
+    const size = card.dataset.size;
+    const img = card.dataset.img;
+    const id = card.dataset.id;
 
-    // reset colors
+    currentProduct = { id, name, price, size, img };
+
+    modalTitle.innerText = name;
+    modalPrice.innerText = moneyCAD(price);
+    modalSize.innerText = "Size: " + size;
+    modalImg.src = img;
+    modalImg.alt = name;
+
+    selectedColor = null;
     colorOptions.querySelectorAll('span').forEach(s => s.classList.remove('active'));
 
     modal.classList.add('active');
     modalContent.scrollTop = 0;
   }
 
-  document.querySelectorAll('.decal-card').forEach(card => {
-    card.addEventListener('click', () => openModalFromCard(card));
-  });
+  // close modal
+  closeBtn.addEventListener('click', () => modal.classList.remove('active'));
+  modal.addEventListener('click', (e) => { if (e.target === modal) modal.classList.remove('active'); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') modal.classList.remove('active'); });
 
+  // choose color
   colorOptions.querySelectorAll('span').forEach(btn => {
     btn.addEventListener('click', () => {
       colorOptions.querySelectorAll('span').forEach(s => s.classList.remove('active'));
       btn.classList.add('active');
+      selectedColor = btn.innerText;
     });
   });
 
-  closeBtn.addEventListener('click', () => modal.classList.remove('active'));
+  // ---------- Cart Logic ----------
+  function addToCart(product, color) {
+    const chosenColor = color || 'Black'; // default if none picked
+    const key = `${product.id}__${chosenColor}`;
 
-  modal.addEventListener('click', (e) => {
-    if (e.target === modal) modal.classList.remove('active');
+    const existing = cart.find(i => i.key === key);
+    if (existing) {
+      existing.qty += 1;
+    } else {
+      cart.push({
+        key,
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        img: product.img,
+        color: chosenColor,
+        qty: 1
+      });
+    }
+
+    saveCart(cart);
+    renderCart();
+    openCart();
+  }
+
+  function removeFromCart(key) {
+    cart = cart.filter(i => i.key !== key);
+    saveCart(cart);
+    renderCart();
+  }
+
+  function changeQty(key, delta) {
+    const item = cart.find(i => i.key === key);
+    if (!item) return;
+    item.qty += delta;
+    if (item.qty <= 0) {
+      removeFromCart(key);
+      return;
+    }
+    saveCart(cart);
+    renderCart();
+  }
+
+  function cartQtyTotal() {
+    return cart.reduce((sum, i) => sum + i.qty, 0);
+  }
+
+  function cartPriceTotal() {
+    return cart.reduce((sum, i) => sum + (i.price * i.qty), 0);
+  }
+
+  function renderCart() {
+    cartCount.innerText = String(cartQtyTotal());
+    cartTotalEl.innerText = moneyCAD(cartPriceTotal());
+
+    if (cart.length === 0) {
+      cartItemsEl.innerHTML = `<div style="opacity:.7; padding:10px 2px; text-align:center;">Cart is empty.</div>`;
+      return;
+    }
+
+    cartItemsEl.innerHTML = cart.map(item => `
+      <div class="cart-item">
+        <div class="cart-thumb">
+          <img src="${item.img}" alt="">
+        </div>
+        <div class="cart-meta">
+          <div class="name">${item.name}</div>
+          <div class="variant">Color: ${item.color}</div>
+          <div class="price">${moneyCAD(item.price)} each</div>
+          <div class="qty-row">
+            <button class="qty-btn" type="button" data-action="dec" data-key="${item.key}">−</button>
+            <div class="qty">${item.qty}</div>
+            <button class="qty-btn" type="button" data-action="inc" data-key="${item.key}">+</button>
+            <button class="remove-btn" type="button" data-action="remove" data-key="${item.key}">Remove</button>
+          </div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  // ---------- Cart Drawer ----------
+  function openCart() {
+    cartOverlay.classList.add('active');
+  }
+  function closeCart() {
+    cartOverlay.classList.remove('active');
+  }
+
+  cartFab.addEventListener('click', openCart);
+  closeCartBtn.addEventListener('click', closeCart);
+  cartOverlay.addEventListener('click', (e) => { if (e.target === cartOverlay) closeCart(); });
+
+  // handle cart buttons (event delegation)
+  cartItemsEl.addEventListener('click', (e) => {
+    const btn = e.target.closest('button');
+    if (!btn) return;
+
+    const action = btn.dataset.action;
+    const key = btn.dataset.key;
+    if (!action || !key) return;
+
+    if (action === 'inc') changeQty(key, +1);
+    if (action === 'dec') changeQty(key, -1);
+    if (action === 'remove') removeFromCart(key);
   });
 
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') modal.classList.remove('active');
+  // ---------- Wire up cards ----------
+  document.querySelectorAll('.decal-card').forEach(card => {
+    // clicking the card opens modal
+    card.addEventListener('click', (e) => {
+      // If user clicked the Add to Cart button, don't open modal
+      if (e.target.closest('.add-to-cart')) return;
+      openModalFromCard(card);
+    });
+
+    // add-to-cart button on card
+    const btn = card.querySelector('.add-to-cart');
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const product = {
+        id: card.dataset.id,
+        name: card.dataset.name,
+        price: Number(card.dataset.price),
+        img: card.dataset.img
+      };
+      // default color Black for quick add
+      addToCart(product, 'Black');
+    });
   });
+
+  // Modal add-to-cart
+  modalAddBtn.addEventListener('click', () => {
+    if (!currentProduct) return;
+    addToCart(currentProduct, selectedColor || 'Black');
+    modal.classList.remove('active');
+  });
+
+  // Fake checkout
+  document.getElementById('fakeCheckoutBtn').addEventListener('click', () => {
+    alert("Checkout is coming soon. This cart is working — when you're ready, we can connect real payments (Shopify/Stripe).");
+  });
+
+  // initial render
+  renderCart();
 </script>
 
 </body>
