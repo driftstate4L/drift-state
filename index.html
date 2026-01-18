@@ -18,7 +18,13 @@ body{margin:0;background:#000;color:#fff;font-family:Arial,sans-serif}
 /* LOGO */
 .logo-wrap{perspective:1000px;display:flex;justify-content:center;margin-bottom:1.5rem}
 .logo{width:220px;height:220px;animation:spin 10s linear infinite;transform-style:preserve-3d}
-.logo img{width:100%;height:100%;object-fit:contain;filter:grayscale(100%) brightness(1.3) contrast(1.4) drop-shadow(0 0 18px rgba(255,255,255,.35));pointer-events:none}
+.logo img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  filter:grayscale(100%) brightness(1.3) contrast(1.4) drop-shadow(0 0 18px rgba(255,255,255,.35));
+  pointer-events:none
+}
 @keyframes spin{from{transform:rotateY(0)}to{transform:rotateY(360deg)}}
 
 .brand-name{font-family:'UnifrakturCook',cursive;font-size:3.2rem;letter-spacing:6px}
@@ -27,36 +33,152 @@ body{margin:0;background:#000;color:#fff;font-family:Arial,sans-serif}
 /* SECTIONS */
 .section{padding:5rem 2rem}
 .section-title{text-align:center;font-size:2.5rem;letter-spacing:6px;margin-bottom:3rem}
-
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:2rem;max-width:1100px;margin:auto}
 
 /* PRODUCT CARD */
-.card{border:1px solid rgba(255,255,255,.25);padding:1.25rem;text-align:center;cursor:pointer}
-.card img{max-width:100%;max-height:100%;object-fit:contain}
-.card-img{aspect-ratio:16/9;border:1px solid rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;margin-bottom:1rem}
+.card{
+  border:1px solid rgba(255,255,255,.25);
+  padding:1.25rem;
+  text-align:center;
+  cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+  user-select:none;
+}
+.card-img{
+  aspect-ratio:16/9;
+  border:1px solid rgba(255,255,255,.15);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin-bottom:1rem;
+  padding:12px;
+  background:rgba(255,255,255,.04);
+}
+.card-img img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  display:block;
+  pointer-events:none;
+}
+
 .name{letter-spacing:2px}
 .price{opacity:.85;margin:.5rem 0}
 
-.btn{border:1px solid rgba(255,255,255,.5);background:none;color:#fff;padding:.6rem 1rem;cursor:pointer}
+.btn{
+  border:1px solid rgba(255,255,255,.5);
+  background:none;
+  color:#fff;
+  padding:.6rem 1rem;
+  cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+}
 
 /* MODAL */
-.modal{position:fixed;inset:0;background:rgba(0,0,0,.95);display:none;justify-content:center;align-items:flex-start;padding:1rem;z-index:999}
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.95);
+  display:none;
+  justify-content:center;
+  align-items:flex-start;
+  padding:1rem;
+  z-index:999;
+}
 .modal.active{display:flex}
-.modal-box{max-width:720px;width:100%;max-height:90vh;overflow-y:auto;text-align:center}
-.modal-img{aspect-ratio:16/9;border:1px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;margin:1rem 0}
-.colors span{border:1px solid #fff;padding:.4rem .8rem;margin:.3rem;display:inline-block;cursor:pointer;opacity:.7}
-.colors span.active{background:#fff;color:#000}
-.close{margin-top:1rem;opacity:.7;cursor:pointer}
+
+/* Scroll inside modal so you can see size/colors on mobile */
+.modal-box{
+  max-width:720px;
+  width:100%;
+  max-height:92vh;
+  overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
+  text-align:center;
+  padding-bottom:1.5rem;
+}
+
+/* ✅ FIX: modal image frame + containment */
+.modal-img{
+  width:100%;
+  max-width:720px;
+  aspect-ratio:16/9;
+  border:1px solid rgba(255,255,255,.2);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin:1rem auto;
+  padding:14px;
+  background:rgba(255,255,255,.05);
+  overflow:hidden; /* prevents any spill */
+}
+.modal-img img{
+  width:100%;
+  height:100%;
+  object-fit:contain;     /* <-- this is the key fix */
+  display:block;
+}
+
+.colors span{
+  border:1px solid #fff;
+  padding:.4rem .8rem;
+  margin:.3rem;
+  display:inline-block;
+  cursor:pointer;
+  opacity:.7;
+  -webkit-tap-highlight-color:transparent;
+  user-select:none;
+}
+.colors span.active{background:#fff;color:#000;opacity:1}
+
+.close{
+  margin-top:1rem;
+  opacity:.7;
+  cursor:pointer;
+  padding:.6rem 1rem;
+  border:1px solid rgba(255,255,255,.25);
+  display:inline-block;
+}
 
 /* CART */
-.cart-btn{position:fixed;bottom:16px;right:16px;border:1px solid rgba(255,255,255,.6);padding:.8rem 1rem;cursor:pointer;background:rgba(0,0,0,.8)}
+.cart-btn{
+  position:fixed;
+  bottom:16px;
+  right:16px;
+  border:1px solid rgba(255,255,255,.6);
+  padding:.8rem 1rem;
+  cursor:pointer;
+  background:rgba(0,0,0,.8);
+  z-index:1200;
+  -webkit-tap-highlight-color:transparent;
+}
 .cart-count{margin-left:8px}
-.cart-panel{position:fixed;inset:0;background:rgba(0,0,0,.8);display:none;z-index:1200}
+
+.cart-panel{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.8);
+  display:none;
+  z-index:1200;
+}
 .cart-panel.active{display:block}
-.cart{position:absolute;right:0;top:0;width:360px;height:100%;background:#000;border-left:1px solid rgba(255,255,255,.2);padding:1rem;display:flex;flex-direction:column}
-.cart-items{flex:1;overflow-y:auto}
+
+.cart{
+  position:absolute;
+  right:0;
+  top:0;
+  width:min(360px,100%);
+  height:100%;
+  background:#000;
+  border-left:1px solid rgba(255,255,255,.2);
+  padding:1rem;
+  display:flex;
+  flex-direction:column;
+}
+.cart-items{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch}
 .cart-item{border:1px solid rgba(255,255,255,.2);padding:.7rem;margin-bottom:.7rem}
 .remove{margin-top:.4rem;font-size:.8rem;opacity:.7;cursor:pointer}
+
 footer{text-align:center;padding:2rem;opacity:.6}
 </style>
 </head>
@@ -65,7 +187,9 @@ footer{text-align:center;padding:2rem;opacity:.6}
 
 <section class="hero">
   <div class="brand">
-    <div class="logo-wrap"><div class="logo"><img src="ds-logo-v2.png"></div></div>
+    <div class="logo-wrap">
+      <div class="logo"><img src="ds-logo-v2.png" alt="DS"></div>
+    </div>
     <div class="brand-name">𝖘𝖍𝖔𝖕 𝖇𝖊𝖑𝖔𝖜</div>
     <div class="tagline">↓</div>
   </div>
@@ -75,32 +199,32 @@ footer{text-align:center;padding:2rem;opacity:.6}
 <section class="section">
   <div class="section-title">BANNERS</div>
   <div class="grid">
-    <div class="card" data-id="corner" data-name="DS Corner Banner" data-price="45" data-img="decal-ds-corner.png">
-      <div class="card-img"><img src="decal-ds-corner.png"></div>
+    <div class="card" data-id="corner" data-name="DS Corner Banner" data-price="45.00" data-size='16" × 8"' data-img="decal-ds-corner.png">
+      <div class="card-img"><img src="decal-ds-corner.png" alt=""></div>
       <div class="name">DS Corner Banner</div>
-      <div class="price">$45 CAD</div>
-      <button class="btn add">Add to Cart</button>
+      <div class="price">$45.00 CAD</div>
+      <button class="btn add" type="button">Add to Cart</button>
     </div>
 
-    <div class="card" data-id="cursive" data-name="DS Cursive Banner" data-price="55" data-img="decal-ds-cursive.png">
-      <div class="card-img"><img src="decal-ds-cursive.png"></div>
+    <div class="card" data-id="cursive" data-name="DS Cursive Banner" data-price="55.00" data-size='36" × 5"' data-img="decal-ds-cursive.png">
+      <div class="card-img"><img src="decal-ds-cursive.png" alt=""></div>
       <div class="name">DS Cursive Banner</div>
-      <div class="price">$55 CAD</div>
-      <button class="btn add">Add to Cart</button>
+      <div class="price">$55.00 CAD</div>
+      <button class="btn add" type="button">Add to Cart</button>
     </div>
 
-    <div class="card" data-id="grunge" data-name="DS Grunge Banner" data-price="50" data-img="decal-ds-grunge.png">
-      <div class="card-img"><img src="decal-ds-grunge.png"></div>
+    <div class="card" data-id="grunge" data-name="DS Grunge Banner" data-price="50.00" data-size='21" × 9"' data-img="decal-ds-grunge.png">
+      <div class="card-img"><img src="decal-ds-grunge.png" alt=""></div>
       <div class="name">DS Grunge Banner</div>
-      <div class="price">$50 CAD</div>
-      <button class="btn add">Add to Cart</button>
+      <div class="price">$50.00 CAD</div>
+      <button class="btn add" type="button">Add to Cart</button>
     </div>
 
-    <div class="card" data-id="gothic" data-name="DS Gothic Banner" data-price="55" data-img="decal-ds-gothic.png">
-      <div class="card-img"><img src="decal-ds-gothic.png"></div>
+    <div class="card" data-id="gothic" data-name="DS Gothic Banner" data-price="55.00" data-size='32" × 4"' data-img="decal-ds-gothic.png">
+      <div class="card-img"><img src="decal-ds-gothic.png" alt=""></div>
       <div class="name">DS Gothic Banner</div>
-      <div class="price">$55 CAD</div>
-      <button class="btn add">Add to Cart</button>
+      <div class="price">$55.00 CAD</div>
+      <button class="btn add" type="button">Add to Cart</button>
     </div>
   </div>
 </section>
@@ -109,91 +233,162 @@ footer{text-align:center;padding:2rem;opacity:.6}
 <section class="section">
   <div class="section-title">STICKERS</div>
   <div class="grid">
-    <div class="card" data-id="moon" data-name="DS Moon Man" data-price="15" data-img="sticker-ds-moon-man.png">
-      <div class="card-img"><img src="sticker-ds-moon-man.png"></div>
+    <div class="card" data-id="moon" data-name="DS Moon Man" data-price="15.00" data-size='6.5" × 6.5"' data-img="sticker-ds-moon-man.png">
+      <div class="card-img"><img src="sticker-ds-moon-man.png" alt=""></div>
       <div class="name">DS Moon Man</div>
-      <div class="price">$15 CAD</div>
-      <button class="btn add">Add to Cart</button>
+      <div class="price">$15.00 CAD</div>
+      <button class="btn add" type="button">Add to Cart</button>
     </div>
   </div>
 </section>
 
 <!-- MODAL -->
 <div class="modal" id="modal">
-  <div class="modal-box">
-    <div class="logo-wrap"><div class="logo"><img src="ds-logo-v2.png"></div></div>
-    <div class="modal-img"><img id="modalImg"></div>
-    <h2 id="modalName"></h2>
-    <p id="modalPrice"></p>
-    <div class="colors">
+  <div class="modal-box" id="modalBox">
+    <div class="logo-wrap" style="margin-top:.5rem;">
+      <div class="logo" style="width:160px;height:160px;"><img src="ds-logo-v2.png" alt="DS"></div>
+    </div>
+
+    <div class="modal-img">
+      <img id="modalImg" alt="">
+    </div>
+
+    <h2 id="modalName" style="margin:.25rem 0 0;"></h2>
+    <p id="modalPrice" style="opacity:.85;margin:.35rem 0;"></p>
+    <p id="modalSize" style="opacity:.75;margin:.2rem 0 1rem;"></p>
+
+    <div class="colors" id="colors">
       <span>Black</span><span>White</span><span>Silver</span>
     </div>
-    <button class="btn" id="modalAdd">Add to Cart</button>
-    <div class="close" onclick="closeModal()">Close</div>
+
+    <button class="btn" id="modalAdd" type="button" style="margin-top:1rem;">Add to Cart</button>
+    <div class="close" id="modalClose">Close</div>
   </div>
 </div>
 
 <!-- CART -->
-<div class="cart-btn" onclick="toggleCart()">CART <span class="cart-count" id="cartCount">0</span></div>
+<div class="cart-btn" id="cartButton">CART <span class="cart-count" id="cartCount">0</span></div>
+
 <div class="cart-panel" id="cartPanel">
   <div class="cart">
-    <h3>CART</h3>
+    <h3 style="margin:.25rem 0 1rem;">CART</h3>
     <div class="cart-items" id="cartItems"></div>
-    <button class="btn" onclick="toggleCart()">Close</button>
+    <button class="btn" id="cartClose" type="button">Close</button>
   </div>
 </div>
 
 <footer>© Drift State</footer>
 
 <script>
-let cart=[];
-const cartCount=document.getElementById('cartCount');
-const cartItems=document.getElementById('cartItems');
-const modal=document.getElementById('modal');
-let current=null,color='Black';
+let cart = [];
+const cartCount = document.getElementById('cartCount');
+const cartItems = document.getElementById('cartItems');
 
-document.querySelectorAll('.card').forEach(card=>{
-  card.onclick=()=>openModal(card);
-  card.querySelector('.add').onclick=e=>{
+const modal = document.getElementById('modal');
+const modalBox = document.getElementById('modalBox');
+const modalImg = document.getElementById('modalImg');
+const modalName = document.getElementById('modalName');
+const modalPrice = document.getElementById('modalPrice');
+const modalSize = document.getElementById('modalSize');
+const modalAdd = document.getElementById('modalAdd');
+const modalClose = document.getElementById('modalClose');
+
+const colorsWrap = document.getElementById('colors');
+let currentCard = null;
+let selectedColor = 'Black';
+
+function moneyCAD(n){ return `$${Number(n).toFixed(2)} CAD`; }
+
+document.querySelectorAll('.card').forEach(card => {
+  // open modal by tapping card (not the add button)
+  card.addEventListener('click', () => openModal(card));
+
+  // add button: stop card click
+  const addBtn = card.querySelector('.add');
+  addBtn.addEventListener('click', (e) => {
     e.stopPropagation();
-    addItem(card.dataset.name,card.dataset.price,'Black');
-  }
+    addItem(card.dataset.name, card.dataset.price, 'Black');
+  });
 });
 
 function openModal(card){
-  current=card;
+  currentCard = card;
+  selectedColor = 'Black';
+  [...colorsWrap.querySelectorAll('span')].forEach(s => s.classList.remove('active'));
+  colorsWrap.querySelectorAll('span')[0].classList.add('active');
+
+  modalImg.src = card.dataset.img;
+  modalImg.alt = card.dataset.name;
+  modalName.textContent = card.dataset.name;
+  modalPrice.textContent = moneyCAD(card.dataset.price);
+  modalSize.textContent = `Size: ${card.dataset.size}`;
+
   modal.classList.add('active');
-  document.getElementById('modalImg').src=card.dataset.img;
-  document.getElementById('modalName').innerText=card.dataset.name;
-  document.getElementById('modalPrice').innerText='$'+card.dataset.price+' CAD';
+  modalBox.scrollTop = 0;
 }
 
-function closeModal(){modal.classList.remove('active')}
+function closeModal(){
+  modal.classList.remove('active');
+}
 
-document.querySelectorAll('.colors span').forEach(s=>{
-  s.onclick=()=>{document.querySelectorAll('.colors span').forEach(x=>x.classList.remove('active'));s.classList.add('active');color=s.innerText}
+colorsWrap.querySelectorAll('span').forEach(span => {
+  span.addEventListener('click', () => {
+    colorsWrap.querySelectorAll('span').forEach(s => s.classList.remove('active'));
+    span.classList.add('active');
+    selectedColor = span.textContent;
+  });
 });
 
-document.getElementById('modalAdd').onclick=()=>{addItem(current.dataset.name,current.dataset.price,color);closeModal()}
+modalAdd.addEventListener('click', () => {
+  if(!currentCard) return;
+  addItem(currentCard.dataset.name, currentCard.dataset.price, selectedColor);
+  closeModal();
+});
 
-function addItem(name,price,color){
-  cart.push({name,price,color});
+modalClose.addEventListener('click', closeModal);
+
+// click outside modal box closes
+modal.addEventListener('click', (e) => {
+  if(e.target === modal) closeModal();
+});
+
+function addItem(name, price, color){
+  cart.push({name, price: Number(price), color});
   renderCart();
 }
 
 function renderCart(){
-  cartCount.innerText=cart.length;
-  cartItems.innerHTML='';
-  cart.forEach((i,idx)=>{
-    const d=document.createElement('div');
-    d.className='cart-item';
-    d.innerHTML=`${i.name}<br>${i.color} – $${i.price} CAD<div class="remove" onclick="removeItem(${idx})">Remove</div>`;
+  cartCount.textContent = cart.length;
+  cartItems.innerHTML = '';
+  cart.forEach((item, idx) => {
+    const d = document.createElement('div');
+    d.className = 'cart-item';
+    d.innerHTML = `
+      <div style="line-height:1.35">
+        <div style="letter-spacing:1px">${item.name}</div>
+        <div style="opacity:.75;font-size:.9rem">Color: ${item.color}</div>
+        <div style="opacity:.9">${moneyCAD(item.price)}</div>
+        <div class="remove" data-idx="${idx}">Remove</div>
+      </div>
+    `;
     cartItems.appendChild(d);
+  });
+
+  // wire remove buttons
+  cartItems.querySelectorAll('.remove').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const i = Number(btn.dataset.idx);
+      cart.splice(i, 1);
+      renderCart();
+    });
   });
 }
 
-function removeItem(i){cart.splice(i,1);renderCart()}
-function toggleCart(){document.getElementById('cartPanel').classList.toggle('active')}
+/* cart open/close */
+const cartPanel = document.getElementById('cartPanel');
+document.getElementById('cartButton').addEventListener('click', () => cartPanel.classList.add('active'));
+document.getElementById('cartClose').addEventListener('click', () => cartPanel.classList.remove('active'));
+cartPanel.addEventListener('click', (e) => { if(e.target === cartPanel) cartPanel.classList.remove('active'); });
 </script>
 
 </body>
