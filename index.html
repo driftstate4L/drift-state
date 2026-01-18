@@ -1,380 +1,200 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Drift State</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<title>Drift State</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&display=swap" rel="stylesheet">
 
-  <style>
-    * { box-sizing: border-box; }
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#000;color:#fff;font-family:Arial,sans-serif}
 
-    body {
-      margin: 0;
-      background: black;
-      color: white;
-      font-family: Arial, sans-serif;
-    }
+/* HERO */
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:2rem}
+.brand{max-width:720px}
 
-    /* HERO */
-    .hero {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 2rem;
-      position: relative;
-    }
-    .brand { max-width: 720px; }
+/* LOGO */
+.logo-wrap{perspective:1000px;display:flex;justify-content:center;margin-bottom:1.5rem}
+.logo{width:220px;height:220px;animation:spin 10s linear infinite;transform-style:preserve-3d}
+.logo img{width:100%;height:100%;object-fit:contain;filter:grayscale(100%) brightness(1.3) contrast(1.4) drop-shadow(0 0 18px rgba(255,255,255,.35));pointer-events:none}
+@keyframes spin{from{transform:rotateY(0)}to{transform:rotateY(360deg)}}
 
-    /* SPINNING LOGO */
-    .logo-3d-wrapper {
-      perspective: 1000px;
-      display: flex;
-      justify-content: center;
-      margin-bottom: 1.5rem;
-    }
-    .logo-3d {
-      width: 220px;
-      height: 220px;
-      transform-style: preserve-3d;
-      animation: spin 10s linear infinite;
-    }
-    .logo-3d img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      background: transparent;
-      filter:
-        grayscale(100%)
-        brightness(1.35)
-        contrast(1.45)
-        drop-shadow(0 0 18px rgba(255,255,255,0.35));
-      pointer-events: none;
-      display: block;
-    }
-    @keyframes spin {
-      from { transform: rotateY(0deg); }
-      to   { transform: rotateY(360deg); }
-    }
+.brand-name{font-family:'UnifrakturCook',cursive;font-size:3.2rem;letter-spacing:6px}
+.tagline{font-size:2.5rem;opacity:.8}
 
-    .brand-name {
-      font-family: 'UnifrakturCook', cursive;
-      font-size: 3.2rem;
-      letter-spacing: 6px;
-      margin: 0.75rem 0 0;
-    }
-    .tagline {
-      font-size: 2.5rem;
-      opacity: 0.85;
-      margin-top: 0.5rem;
-    }
+/* SECTIONS */
+.section{padding:5rem 2rem}
+.section-title{text-align:center;font-size:2.5rem;letter-spacing:6px;margin-bottom:3rem}
 
-    /* SECTIONS */
-    .section {
-      padding: 5rem 2rem;
-    }
-    .section-title {
-      text-align: center;
-      font-size: 2.5rem;
-      letter-spacing: 6px;
-      margin-bottom: 3rem;
-    }
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:2rem;max-width:1100px;margin:auto}
 
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 2rem;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
+/* PRODUCT CARD */
+.card{border:1px solid rgba(255,255,255,.25);padding:1.25rem;text-align:center;cursor:pointer}
+.card img{max-width:100%;max-height:100%;object-fit:contain}
+.card-img{aspect-ratio:16/9;border:1px solid rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;margin-bottom:1rem}
+.name{letter-spacing:2px}
+.price{opacity:.85;margin:.5rem 0}
 
-    .product-card {
-      border: 1px solid rgba(255,255,255,0.25);
-      padding: 1.25rem;
-      text-align: center;
-      cursor: pointer;
-      transition: transform 0.25s ease, box-shadow 0.25s ease;
-      background: black;
-      position: relative;
-      z-index: 1;
-      -webkit-tap-highlight-color: transparent;
-      user-select: none;
-    }
-    .product-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 0 30px rgba(255,255,255,0.15);
-    }
+.btn{border:1px solid rgba(255,255,255,.5);background:none;color:#fff;padding:.6rem 1rem;cursor:pointer}
 
-    /* IMAGE FRAME — centered */
-    .product-image {
-      width: 100%;
-      aspect-ratio: 16 / 9;
-      border: 1px solid rgba(255,255,255,0.15);
-      margin-bottom: 1rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 14px;
-      background: rgba(255,255,255,0.04);
-      pointer-events: none;
-    }
-    .product-image img {
-      max-width: 100%;
-      max-height: 100%;
-      object-fit: contain;
-      pointer-events: none;
-      display: block;
-    }
+/* MODAL */
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.95);display:none;justify-content:center;align-items:flex-start;padding:1rem;z-index:999}
+.modal.active{display:flex}
+.modal-box{max-width:720px;width:100%;max-height:90vh;overflow-y:auto;text-align:center}
+.modal-img{aspect-ratio:16/9;border:1px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;margin:1rem 0}
+.colors span{border:1px solid #fff;padding:.4rem .8rem;margin:.3rem;display:inline-block;cursor:pointer;opacity:.7}
+.colors span.active{background:#fff;color:#000}
+.close{margin-top:1rem;opacity:.7;cursor:pointer}
 
-    .product-name { letter-spacing: 2px; margin-bottom: 0.3rem; }
-    .product-price { opacity: 0.85; margin-bottom: 0.9rem; }
+/* CART */
+.cart-btn{position:fixed;bottom:16px;right:16px;border:1px solid rgba(255,255,255,.6);padding:.8rem 1rem;cursor:pointer;background:rgba(0,0,0,.8)}
+.cart-count{margin-left:8px}
+.cart-panel{position:fixed;inset:0;background:rgba(0,0,0,.8);display:none;z-index:1200}
+.cart-panel.active{display:block}
+.cart{position:absolute;right:0;top:0;width:360px;height:100%;background:#000;border-left:1px solid rgba(255,255,255,.2);padding:1rem;display:flex;flex-direction:column}
+.cart-items{flex:1;overflow-y:auto}
+.cart-item{border:1px solid rgba(255,255,255,.2);padding:.7rem;margin-bottom:.7rem}
+.remove{margin-top:.4rem;font-size:.8rem;opacity:.7;cursor:pointer}
+footer{text-align:center;padding:2rem;opacity:.6}
+</style>
+</head>
 
-    .btn {
-      display: inline-block;
-      border: 1px solid rgba(255,255,255,0.35);
-      background: transparent;
-      color: white;
-      padding: 0.65rem 1rem;
-      cursor: pointer;
-      user-select: none;
-      -webkit-tap-highlight-color: transparent;
-      transition: opacity 0.2s ease, transform 0.2s ease;
-      font-size: 0.95rem;
-      letter-spacing: 1px;
-    }
-    .btn:hover { opacity: 0.9; transform: translateY(-1px); }
-    .btn:active { transform: translateY(0px); }
-    .btn-primary { border-color: rgba(255,255,255,0.65); }
+<body>
 
-    /* MODAL OVERLAY */
-    .modal {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.95);
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      padding: 1.25rem 1rem;
-      z-index: 999;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.2s ease;
-    }
-    .modal.active {
-      opacity: 1;
-      pointer-events: auto;
-    }
+<section class="hero">
+  <div class="brand">
+    <div class="logo-wrap"><div class="logo"><img src="ds-logo-v2.png"></div></div>
+    <div class="brand-name">𝖘𝖍𝖔𝖕 𝖇𝖊𝖑𝖔𝖜</div>
+    <div class="tagline">↓</div>
+  </div>
+</section>
 
-    /* scroll inside modal */
-    .modal-content {
-      width: min(720px, 100%);
-      text-align: center;
-      max-height: calc(100vh - 2.5rem);
-      overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
-      padding: 0.5rem 0 2rem;
-    }
+<!-- BANNERS -->
+<section class="section">
+  <div class="section-title">BANNERS</div>
+  <div class="grid">
+    <div class="card" data-id="corner" data-name="DS Corner Banner" data-price="45" data-img="decal-ds-corner.png">
+      <div class="card-img"><img src="decal-ds-corner.png"></div>
+      <div class="name">DS Corner Banner</div>
+      <div class="price">$45 CAD</div>
+      <button class="btn add">Add to Cart</button>
+    </div>
 
-    /* smaller logo inside modal */
-    .modal .logo-3d {
-      width: 160px;
-      height: 160px;
-    }
+    <div class="card" data-id="cursive" data-name="DS Cursive Banner" data-price="55" data-img="decal-ds-cursive.png">
+      <div class="card-img"><img src="decal-ds-cursive.png"></div>
+      <div class="name">DS Cursive Banner</div>
+      <div class="price">$55 CAD</div>
+      <button class="btn add">Add to Cart</button>
+    </div>
 
-    .modal-product-image {
-      width: 100%;
-      aspect-ratio: 16 / 9;
-      border: 1px solid rgba(255,255,255,0.18);
-      margin: 1rem auto;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 16px;
-      background: rgba(255,255,255,0.05);
-    }
-    .modal-product-image img {
-      max-width: 100%;
-      max-height: 100%;
-      object-fit: contain;
-      display: block;
-    }
+    <div class="card" data-id="grunge" data-name="DS Grunge Banner" data-price="50" data-img="decal-ds-grunge.png">
+      <div class="card-img"><img src="decal-ds-grunge.png"></div>
+      <div class="name">DS Grunge Banner</div>
+      <div class="price">$50 CAD</div>
+      <button class="btn add">Add to Cart</button>
+    </div>
 
-    .color-options span {
-      display: inline-block;
-      border: 1px solid white;
-      padding: 0.45rem 0.9rem;
-      margin: 0.35rem;
-      cursor: pointer;
-      opacity: 0.7;
-      user-select: none;
-      -webkit-tap-highlight-color: transparent;
-    }
-    .color-options span.active {
-      background: white;
-      color: black;
-      opacity: 1;
-    }
+    <div class="card" data-id="gothic" data-name="DS Gothic Banner" data-price="55" data-img="decal-ds-gothic.png">
+      <div class="card-img"><img src="decal-ds-gothic.png"></div>
+      <div class="name">DS Gothic Banner</div>
+      <div class="price">$55 CAD</div>
+      <button class="btn add">Add to Cart</button>
+    </div>
+  </div>
+</section>
 
-    .close {
-      margin-top: 1.25rem;
-      cursor: pointer;
-      opacity: 0.7;
-      padding: 0.7rem 1.1rem;
-      border: 1px solid rgba(255,255,255,0.25);
-      display: inline-block;
-    }
-    .close:hover { opacity: 1; }
+<!-- STICKERS -->
+<section class="section">
+  <div class="section-title">STICKERS</div>
+  <div class="grid">
+    <div class="card" data-id="moon" data-name="DS Moon Man" data-price="15" data-img="sticker-ds-moon-man.png">
+      <div class="card-img"><img src="sticker-ds-moon-man.png"></div>
+      <div class="name">DS Moon Man</div>
+      <div class="price">$15 CAD</div>
+      <button class="btn add">Add to Cart</button>
+    </div>
+  </div>
+</section>
 
-    footer {
-      text-align: center;
-      padding: 2rem;
-      opacity: 0.6;
-    }
+<!-- MODAL -->
+<div class="modal" id="modal">
+  <div class="modal-box">
+    <div class="logo-wrap"><div class="logo"><img src="ds-logo-v2.png"></div></div>
+    <div class="modal-img"><img id="modalImg"></div>
+    <h2 id="modalName"></h2>
+    <p id="modalPrice"></p>
+    <div class="colors">
+      <span>Black</span><span>White</span><span>Silver</span>
+    </div>
+    <button class="btn" id="modalAdd">Add to Cart</button>
+    <div class="close" onclick="closeModal()">Close</div>
+  </div>
+</div>
 
-    /* CART FAB */
-    .cart-fab {
-      position: fixed;
-      right: 16px;
-      bottom: 16px;
-      z-index: 1200;
-      border: 1px solid rgba(255,255,255,0.5);
-      background: rgba(0,0,0,0.75);
-      color: white;
-      padding: 0.85rem 1rem;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      user-select: none;
-      -webkit-tap-highlight-color: transparent;
-      backdrop-filter: blur(6px);
-    }
-    .cart-count {
-      min-width: 22px;
-      height: 22px;
-      border: 1px solid rgba(255,255,255,0.6);
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.85rem;
-      padding: 0 6px;
-    }
+<!-- CART -->
+<div class="cart-btn" onclick="toggleCart()">CART <span class="cart-count" id="cartCount">0</span></div>
+<div class="cart-panel" id="cartPanel">
+  <div class="cart">
+    <h3>CART</h3>
+    <div class="cart-items" id="cartItems"></div>
+    <button class="btn" onclick="toggleCart()">Close</button>
+  </div>
+</div>
 
-    /* CART DRAWER */
-    .cart-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.75);
-      z-index: 1400;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.2s ease;
-    }
-    .cart-overlay.active {
-      opacity: 1;
-      pointer-events: auto;
-    }
+<footer>© Drift State</footer>
 
-    .cart-drawer {
-      position: absolute;
-      right: 0;
-      top: 0;
-      height: 100%;
-      width: min(420px, 100%);
-      background: rgba(0,0,0,0.92);
-      border-left: 1px solid rgba(255,255,255,0.15);
-      display: flex;
-      flex-direction: column;
-      padding: 16px;
-    }
+<script>
+let cart=[];
+const cartCount=document.getElementById('cartCount');
+const cartItems=document.getElementById('cartItems');
+const modal=document.getElementById('modal');
+let current=null,color='Black';
 
-    .cart-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      padding-bottom: 12px;
-      border-bottom: 1px solid rgba(255,255,255,0.15);
-      margin-bottom: 12px;
-    }
+document.querySelectorAll('.card').forEach(card=>{
+  card.onclick=()=>openModal(card);
+  card.querySelector('.add').onclick=e=>{
+    e.stopPropagation();
+    addItem(card.dataset.name,card.dataset.price,'Black');
+  }
+});
 
-    .cart-title {
-      letter-spacing: 3px;
-      font-size: 1.1rem;
-      opacity: 0.95;
-    }
+function openModal(card){
+  current=card;
+  modal.classList.add('active');
+  document.getElementById('modalImg').src=card.dataset.img;
+  document.getElementById('modalName').innerText=card.dataset.name;
+  document.getElementById('modalPrice').innerText='$'+card.dataset.price+' CAD';
+}
 
-    .cart-items {
-      overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
-      padding-right: 4px;
-      flex: 1;
-    }
+function closeModal(){modal.classList.remove('active')}
 
-    .cart-item {
-      border: 1px solid rgba(255,255,255,0.12);
-      padding: 12px;
-      margin-bottom: 12px;
-      display: grid;
-      grid-template-columns: 72px 1fr;
-      gap: 12px;
-      align-items: center;
-    }
+document.querySelectorAll('.colors span').forEach(s=>{
+  s.onclick=()=>{document.querySelectorAll('.colors span').forEach(x=>x.classList.remove('active'));s.classList.add('active');color=s.innerText}
+});
 
-    .cart-thumb {
-      width: 72px;
-      height: 54px;
-      border: 1px solid rgba(255,255,255,0.15);
-      background: rgba(255,255,255,0.04);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-    }
-    .cart-thumb img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
+document.getElementById('modalAdd').onclick=()=>{addItem(current.dataset.name,current.dataset.price,color);closeModal()}
 
-    .cart-meta { text-align: left; }
-    .cart-meta .name {
-      font-size: 0.98rem;
-      letter-spacing: 1px;
-      margin-bottom: 2px;
-    }
-    .cart-meta .variant {
-      font-size: 0.85rem;
-      opacity: 0.75;
-      margin-bottom: 6px;
-    }
-    .cart-meta .price {
-      font-size: 0.9rem;
-      opacity: 0.9;
-      margin-bottom: 8px;
-    }
+function addItem(name,price,color){
+  cart.push({name,price,color});
+  renderCart();
+}
 
-    .qty-row {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
+function renderCart(){
+  cartCount.innerText=cart.length;
+  cartItems.innerHTML='';
+  cart.forEach((i,idx)=>{
+    const d=document.createElement('div');
+    d.className='cart-item';
+    d.innerHTML=`${i.name}<br>${i.color} – $${i.price} CAD<div class="remove" onclick="removeItem(${idx})">Remove</div>`;
+    cartItems.appendChild(d);
+  });
+}
 
-    .qty-btn {
-      border: 1px solid rgba(255,255,255,0.35);
-      background: transparent;
-      color: white;
-      width: 34px;
-      height: 34px;
-      cursor: pointer;
-      user-select: none;
-      -webkit-tap-highlight-color: transparent;
-    }
+function removeItem(i){cart.splice(i,1);renderCart()}
+function toggleCart(){document.getElementById('cartPanel').classList.toggle('active')}
+</script>
 
-    .qty {
-      min-width: 
+</body>
+</html>
