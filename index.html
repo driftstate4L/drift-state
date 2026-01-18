@@ -15,6 +15,33 @@ body{margin:0;background:#000;color:#fff;font-family:Arial,sans-serif}
 .hero{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:2rem}
 .brand{max-width:720px}
 
+/* Currency toggle (top-right) */
+.currency-toggle{
+  position:fixed;
+  top:14px;
+  right:14px;
+  z-index:2000;
+  display:flex;
+  gap:8px;
+  background:rgba(0,0,0,.65);
+  border:1px solid rgba(255,255,255,.25);
+  padding:8px;
+  backdrop-filter: blur(6px);
+}
+.currency-toggle button{
+  border:1px solid rgba(255,255,255,.35);
+  background:transparent;
+  color:#fff;
+  padding:.45rem .7rem;
+  cursor:pointer;
+  opacity:.7;
+  -webkit-tap-highlight-color:transparent;
+}
+.currency-toggle button.active{
+  opacity:1;
+  border-color:rgba(255,255,255,.75);
+}
+
 /* LOGO */
 .logo-wrap{perspective:1000px;display:flex;justify-content:center;margin-bottom:1.5rem}
 .logo{width:220px;height:220px;animation:spin 10s linear infinite;transform-style:preserve-3d}
@@ -98,7 +125,7 @@ body{margin:0;background:#000;color:#fff;font-family:Arial,sans-serif}
   padding-bottom:1.5rem;
 }
 
-/* ✅ FIX: modal image frame + containment */
+/* Modal image (contain) */
 .modal-img{
   width:100%;
   max-width:720px;
@@ -110,12 +137,12 @@ body{margin:0;background:#000;color:#fff;font-family:Arial,sans-serif}
   margin:1rem auto;
   padding:14px;
   background:rgba(255,255,255,.05);
-  overflow:hidden; /* prevents any spill */
+  overflow:hidden;
 }
 .modal-img img{
   width:100%;
   height:100%;
-  object-fit:contain;     /* <-- this is the key fix */
+  object-fit:contain;
   display:block;
 }
 
@@ -167,7 +194,7 @@ body{margin:0;background:#000;color:#fff;font-family:Arial,sans-serif}
   position:absolute;
   right:0;
   top:0;
-  width:min(360px,100%);
+  width:min(380px,100%);
   height:100%;
   background:#000;
   border-left:1px solid rgba(255,255,255,.2);
@@ -179,11 +206,30 @@ body{margin:0;background:#000;color:#fff;font-family:Arial,sans-serif}
 .cart-item{border:1px solid rgba(255,255,255,.2);padding:.7rem;margin-bottom:.7rem}
 .remove{margin-top:.4rem;font-size:.8rem;opacity:.7;cursor:pointer}
 
+.cart-total{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  padding:.75rem 0;
+  border-top:1px solid rgba(255,255,255,.15);
+  margin-top:.5rem;
+  opacity:.95;
+  letter-spacing:1px;
+}
+
+.note{opacity:.65;font-size:.85rem;line-height:1.35;margin:.5rem 0 1rem}
+
 footer{text-align:center;padding:2rem;opacity:.6}
 </style>
 </head>
 
 <body>
+
+<!-- Currency toggle UI -->
+<div class="currency-toggle" aria-label="Currency toggle">
+  <button id="cadBtn" type="button">CAD</button>
+  <button id="usdBtn" type="button">USD</button>
+</div>
 
 <section class="hero">
   <div class="brand">
@@ -199,31 +245,31 @@ footer{text-align:center;padding:2rem;opacity:.6}
 <section class="section">
   <div class="section-title">BANNERS</div>
   <div class="grid">
-    <div class="card" data-id="corner" data-name="DS Corner Banner" data-price="45.00" data-size='16" × 8"' data-img="decal-ds-corner.png">
+    <div class="card" data-id="corner" data-name="DS Corner Banner" data-price-cad="40.00" data-size='16" × 8"' data-img="decal-ds-corner.png">
       <div class="card-img"><img src="decal-ds-corner.png" alt=""></div>
       <div class="name">DS Corner Banner</div>
-      <div class="price">$45.00 CAD</div>
+      <div class="price" data-price-text>$40.00 CAD</div>
       <button class="btn add" type="button">Add to Cart</button>
     </div>
 
-    <div class="card" data-id="cursive" data-name="DS Cursive Banner" data-price="55.00" data-size='36" × 5"' data-img="decal-ds-cursive.png">
+    <div class="card" data-id="cursive" data-name="DS Cursive Banner" data-price-cad="50.00" data-size='36" × 5"' data-img="decal-ds-cursive.png">
       <div class="card-img"><img src="decal-ds-cursive.png" alt=""></div>
       <div class="name">DS Cursive Banner</div>
-      <div class="price">$55.00 CAD</div>
+      <div class="price" data-price-text>$50.00 CAD</div>
       <button class="btn add" type="button">Add to Cart</button>
     </div>
 
-    <div class="card" data-id="grunge" data-name="DS Grunge Banner" data-price="50.00" data-size='21" × 9"' data-img="decal-ds-grunge.png">
+    <div class="card" data-id="grunge" data-name="DS Grunge Banner" data-price-cad="45.00" data-size='21" × 9"' data-img="decal-ds-grunge.png">
       <div class="card-img"><img src="decal-ds-grunge.png" alt=""></div>
       <div class="name">DS Grunge Banner</div>
-      <div class="price">$50.00 CAD</div>
+      <div class="price" data-price-text>$45.00 CAD</div>
       <button class="btn add" type="button">Add to Cart</button>
     </div>
 
-    <div class="card" data-id="gothic" data-name="DS Gothic Banner" data-price="55.00" data-size='32" × 4"' data-img="decal-ds-gothic.png">
+    <div class="card" data-id="gothic" data-name="DS Gothic Banner" data-price-cad="50.00" data-size='32" × 4"' data-img="decal-ds-gothic.png">
       <div class="card-img"><img src="decal-ds-gothic.png" alt=""></div>
       <div class="name">DS Gothic Banner</div>
-      <div class="price">$55.00 CAD</div>
+      <div class="price" data-price-text>$50.00 CAD</div>
       <button class="btn add" type="button">Add to Cart</button>
     </div>
   </div>
@@ -233,10 +279,10 @@ footer{text-align:center;padding:2rem;opacity:.6}
 <section class="section">
   <div class="section-title">STICKERS</div>
   <div class="grid">
-    <div class="card" data-id="moon" data-name="DS Moon Man" data-price="15.00" data-size='6.5" × 6.5"' data-img="sticker-ds-moon-man.png">
+    <div class="card" data-id="moon" data-name="DS Moon Man" data-price-cad="15.00" data-size='6.5" × 6.5"' data-img="sticker-ds-moon-man.png">
       <div class="card-img"><img src="sticker-ds-moon-man.png" alt=""></div>
       <div class="name">DS Moon Man</div>
-      <div class="price">$15.00 CAD</div>
+      <div class="price" data-price-text>$15.00 CAD</div>
       <button class="btn add" type="button">Add to Cart</button>
     </div>
   </div>
@@ -273,16 +319,82 @@ footer{text-align:center;padding:2rem;opacity:.6}
   <div class="cart">
     <h3 style="margin:.25rem 0 1rem;">CART</h3>
     <div class="cart-items" id="cartItems"></div>
-    <button class="btn" id="cartClose" type="button">Close</button>
+
+    <div class="cart-total">
+      <div>Total</div>
+      <div id="cartTotal">$0.00 CAD</div>
+    </div>
+
+    <div class="note">
+      CAD/USD switch changes the display. Real checkout currency will be handled by Shopify once connected.
+    </div>
+
+    <button class="btn" id="shopifyCheckoutBtn" type="button">Checkout with Shopify</button>
+    <button class="btn" id="cartClose" type="button" style="margin-top:.75rem;">Close</button>
   </div>
 </div>
 
 <footer>© Drift State</footer>
 
 <script>
+/** =========================
+ *  Currency settings
+ *  =========================
+ * This toggle is for DISPLAY.
+ * Shopify checkout currency will be handled by Shopify Markets.
+ */
+const CAD_TO_USD = 0.74; // <-- change anytime (example rate)
+let currency = localStorage.getItem('ds_currency') || 'CAD';
+
+const cadBtn = document.getElementById('cadBtn');
+const usdBtn = document.getElementById('usdBtn');
+
+function setCurrency(next){
+  currency = next;
+  localStorage.setItem('ds_currency', currency);
+  cadBtn.classList.toggle('active', currency === 'CAD');
+  usdBtn.classList.toggle('active', currency === 'USD');
+  refreshAllPrices();
+  renderCart();
+}
+
+cadBtn.addEventListener('click', () => setCurrency('CAD'));
+usdBtn.addEventListener('click', () => setCurrency('USD'));
+
+function formatMoneyFromCad(cadAmount){
+  const cad = Number(cadAmount);
+  if(currency === 'USD'){
+    const usd = cad * CAD_TO_USD;
+    return new Intl.NumberFormat('en-US', { style:'currency', currency:'USD' }).format(usd);
+  }
+  return new Intl.NumberFormat('en-CA', { style:'currency', currency:'CAD' }).format(cad);
+}
+
+function suffix(){
+  return currency === 'USD' ? ' USD' : ' CAD';
+}
+
+function refreshAllPrices(){
+  document.querySelectorAll('.card').forEach(card => {
+    const cad = card.dataset.priceCad;
+    const el = card.querySelector('[data-price-text]');
+    if(el) el.textContent = `${formatMoneyFromCad(cad)}${suffix()}`;
+  });
+
+  // modal price too (if open)
+  if(currentCard){
+    const cad = currentCard.dataset.priceCad;
+    modalPrice.textContent = `${formatMoneyFromCad(cad)}${suffix()}`;
+  }
+}
+
+/** =========================
+ *  Modal + cart
+ *  ========================= */
 let cart = [];
 const cartCount = document.getElementById('cartCount');
 const cartItems = document.getElementById('cartItems');
+const cartTotal = document.getElementById('cartTotal');
 
 const modal = document.getElementById('modal');
 const modalBox = document.getElementById('modalBox');
@@ -297,39 +409,35 @@ const colorsWrap = document.getElementById('colors');
 let currentCard = null;
 let selectedColor = 'Black';
 
-function moneyCAD(n){ return `$${Number(n).toFixed(2)} CAD`; }
-
 document.querySelectorAll('.card').forEach(card => {
-  // open modal by tapping card (not the add button)
   card.addEventListener('click', () => openModal(card));
 
-  // add button: stop card click
   const addBtn = card.querySelector('.add');
   addBtn.addEventListener('click', (e) => {
     e.stopPropagation();
-    addItem(card.dataset.name, card.dataset.price, 'Black');
+    addItem(card.dataset.name, card.dataset.priceCad, 'Black');
   });
 });
 
 function openModal(card){
   currentCard = card;
   selectedColor = 'Black';
+
   [...colorsWrap.querySelectorAll('span')].forEach(s => s.classList.remove('active'));
   colorsWrap.querySelectorAll('span')[0].classList.add('active');
 
   modalImg.src = card.dataset.img;
   modalImg.alt = card.dataset.name;
   modalName.textContent = card.dataset.name;
-  modalPrice.textContent = moneyCAD(card.dataset.price);
+
+  modalPrice.textContent = `${formatMoneyFromCad(card.dataset.priceCad)}${suffix()}`;
   modalSize.textContent = `Size: ${card.dataset.size}`;
 
   modal.classList.add('active');
   modalBox.scrollTop = 0;
 }
 
-function closeModal(){
-  modal.classList.remove('active');
-}
+function closeModal(){ modal.classList.remove('active'); }
 
 colorsWrap.querySelectorAll('span').forEach(span => {
   span.addEventListener('click', () => {
@@ -341,40 +449,42 @@ colorsWrap.querySelectorAll('span').forEach(span => {
 
 modalAdd.addEventListener('click', () => {
   if(!currentCard) return;
-  addItem(currentCard.dataset.name, currentCard.dataset.price, selectedColor);
+  addItem(currentCard.dataset.name, currentCard.dataset.priceCad, selectedColor);
   closeModal();
 });
 
 modalClose.addEventListener('click', closeModal);
+modal.addEventListener('click', (e) => { if(e.target === modal) closeModal(); });
 
-// click outside modal box closes
-modal.addEventListener('click', (e) => {
-  if(e.target === modal) closeModal();
-});
-
-function addItem(name, price, color){
-  cart.push({name, price: Number(price), color});
+function addItem(name, priceCad, color){
+  cart.push({name, priceCad: Number(priceCad), color});
   renderCart();
 }
 
 function renderCart(){
   cartCount.textContent = cart.length;
   cartItems.innerHTML = '';
+
+  let totalCad = 0;
+
   cart.forEach((item, idx) => {
+    totalCad += item.priceCad;
+
     const d = document.createElement('div');
     d.className = 'cart-item';
     d.innerHTML = `
       <div style="line-height:1.35">
         <div style="letter-spacing:1px">${item.name}</div>
         <div style="opacity:.75;font-size:.9rem">Color: ${item.color}</div>
-        <div style="opacity:.9">${moneyCAD(item.price)}</div>
+        <div style="opacity:.9">${formatMoneyFromCad(item.priceCad)}${suffix()}</div>
         <div class="remove" data-idx="${idx}">Remove</div>
       </div>
     `;
     cartItems.appendChild(d);
   });
 
-  // wire remove buttons
+  cartTotal.textContent = `${formatMoneyFromCad(totalCad)}${suffix()}`;
+
   cartItems.querySelectorAll('.remove').forEach(btn => {
     btn.addEventListener('click', () => {
       const i = Number(btn.dataset.idx);
@@ -389,6 +499,27 @@ const cartPanel = document.getElementById('cartPanel');
 document.getElementById('cartButton').addEventListener('click', () => cartPanel.classList.add('active'));
 document.getElementById('cartClose').addEventListener('click', () => cartPanel.classList.remove('active'));
 cartPanel.addEventListener('click', (e) => { if(e.target === cartPanel) cartPanel.classList.remove('active'); });
+
+/** =========================
+ *  Shopify checkout hook
+ *  =========================
+ * Put your Shopify cart URL below after you create your store.
+ * Example format:
+ *   https://YOURSTORE.myshopify.com/cart
+ */
+const SHOPIFY_CART_URL = ""; // <-- paste your Shopify cart URL here later
+
+document.getElementById('shopifyCheckoutBtn').addEventListener('click', () => {
+  if(!SHOPIFY_CART_URL){
+    alert("Shopify isn’t connected yet.\n\nNext: create Shopify store + products, then paste your Shopify cart URL into SHOPIFY_CART_URL inside index.html.");
+    return;
+  }
+  window.open(SHOPIFY_CART_URL, "_blank");
+});
+
+/* init */
+setCurrency(currency);
+renderCart();
 </script>
 
 </body>
