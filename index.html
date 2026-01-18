@@ -72,15 +72,18 @@
       margin-top: 0.5rem;
     }
 
-    /* DECALS */
-    .decals-section { padding: 5rem 2rem; }
+    /* SECTIONS */
+    .section {
+      padding: 5rem 2rem;
+    }
     .section-title {
       text-align: center;
       font-size: 2.5rem;
       letter-spacing: 6px;
       margin-bottom: 3rem;
     }
-    .decals-grid {
+
+    .grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
       gap: 2rem;
@@ -88,7 +91,7 @@
       margin: 0 auto;
     }
 
-    .decal-card {
+    .product-card {
       border: 1px solid rgba(255,255,255,0.25);
       padding: 1.25rem;
       text-align: center;
@@ -100,13 +103,13 @@
       -webkit-tap-highlight-color: transparent;
       user-select: none;
     }
-    .decal-card:hover {
+    .product-card:hover {
       transform: translateY(-6px);
       box-shadow: 0 0 30px rgba(255,255,255,0.15);
     }
 
     /* IMAGE FRAME — centered */
-    .decal-image {
+    .product-image {
       width: 100%;
       aspect-ratio: 16 / 9;
       border: 1px solid rgba(255,255,255,0.15);
@@ -118,7 +121,7 @@
       background: rgba(255,255,255,0.04);
       pointer-events: none;
     }
-    .decal-image img {
+    .product-image img {
       max-width: 100%;
       max-height: 100%;
       object-fit: contain;
@@ -126,8 +129,8 @@
       display: block;
     }
 
-    .decal-name { letter-spacing: 2px; margin-bottom: 0.3rem; }
-    .decal-price { opacity: 0.85; margin-bottom: 0.9rem; }
+    .product-name { letter-spacing: 2px; margin-bottom: 0.3rem; }
+    .product-price { opacity: 0.85; margin-bottom: 0.9rem; }
 
     .btn {
       display: inline-block;
@@ -341,9 +344,7 @@
       display: block;
     }
 
-    .cart-meta {
-      text-align: left;
-    }
+    .cart-meta { text-align: left; }
     .cart-meta .name {
       font-size: 0.98rem;
       letter-spacing: 1px;
@@ -424,7 +425,7 @@
   <div class="brand">
     <div class="logo-3d-wrapper">
       <div class="logo-3d">
-        <img src="ds-logo-v2.png?v=20" alt="DS Logo">
+        <img src="ds-logo-v2.png?v=30" alt="DS Logo">
       </div>
     </div>
 
@@ -433,69 +434,96 @@
   </div>
 </section>
 
-<section class="decals-section" id="decals">
+<!-- DECALS -->
+<section class="section" id="decals">
   <div class="section-title">DECALS</div>
 
-  <div class="decals-grid">
+  <div class="grid">
 
-    <div class="decal-card"
-      data-id="corner"
+    <div class="product-card"
+      data-id="decal-corner"
       data-name="DS Corner Banner"
       data-price="45.00"
       data-size="16&quot; × 8&quot;"
-      data-img="decal-ds-corner.png?v=20">
-      <div class="decal-image"><img src="decal-ds-corner.png?v=20" alt=""></div>
-      <div class="decal-name">DS Corner Banner</div>
-      <div class="decal-price">$45.00 CAD</div>
+      data-img="decal-ds-corner.png?v=30"
+      data-category="Decals">
+      <div class="product-image"><img src="decal-ds-corner.png?v=30" alt=""></div>
+      <div class="product-name">DS Corner Banner</div>
+      <div class="product-price">$45.00 CAD</div>
       <button class="btn btn-primary add-to-cart" type="button">Add to Cart</button>
     </div>
 
-    <div class="decal-card"
-      data-id="cursive"
+    <div class="product-card"
+      data-id="decal-cursive"
       data-name="DS Cursive Banner"
       data-price="55.00"
       data-size="36&quot; × 5&quot;"
-      data-img="decal-ds-cursive.png?v=20">
-      <div class="decal-image"><img src="decal-ds-cursive.png?v=20" alt=""></div>
-      <div class="decal-name">DS Cursive Banner</div>
-      <div class="decal-price">$55.00 CAD</div>
+      data-img="decal-ds-cursive.png?v=30"
+      data-category="Decals">
+      <div class="product-image"><img src="decal-ds-cursive.png?v=30" alt=""></div>
+      <div class="product-name">DS Cursive Banner</div>
+      <div class="product-price">$55.00 CAD</div>
       <button class="btn btn-primary add-to-cart" type="button">Add to Cart</button>
     </div>
 
-    <div class="decal-card"
-      data-id="grunge"
+    <div class="product-card"
+      data-id="decal-grunge"
       data-name="DS Grunge Banner"
       data-price="50.00"
       data-size="21&quot; × 9&quot;"
-      data-img="decal-ds-grunge.png?v=20">
-      <div class="decal-image"><img src="decal-ds-grunge.png?v=20" alt=""></div>
-      <div class="decal-name">DS Grunge Banner</div>
-      <div class="decal-price">$50.00 CAD</div>
+      data-img="decal-ds-grunge.png?v=30"
+      data-category="Decals">
+      <div class="product-image"><img src="decal-ds-grunge.png?v=30" alt=""></div>
+      <div class="product-name">DS Grunge Banner</div>
+      <div class="product-price">$50.00 CAD</div>
       <button class="btn btn-primary add-to-cart" type="button">Add to Cart</button>
     </div>
 
-    <div class="decal-card"
-      data-id="gothic"
+    <div class="product-card"
+      data-id="decal-gothic"
       data-name="DS Gothic Banner"
       data-price="55.00"
       data-size="32&quot; × 4&quot;"
-      data-img="decal-ds-gothic.png?v=20">
-      <div class="decal-image"><img src="decal-ds-gothic.png?v=20" alt=""></div>
-      <div class="decal-name">DS Gothic Banner</div>
-      <div class="decal-price">$55.00 CAD</div>
+      data-img="decal-ds-gothic.png?v=30"
+      data-category="Decals">
+      <div class="product-image"><img src="decal-ds-gothic.png?v=30" alt=""></div>
+      <div class="product-name">DS Gothic Banner</div>
+      <div class="product-price">$55.00 CAD</div>
       <button class="btn btn-primary add-to-cart" type="button">Add to Cart</button>
     </div>
 
   </div>
 </section>
 
-<!-- PRODUCT MODAL (tap decal card to open) -->
+<!-- STICKERS -->
+<section class="section" id="stickers">
+  <div class="section-title">STICKERS</div>
+
+  <div class="grid">
+
+    <div class="product-card"
+      data-id="sticker-moon-man"
+      data-name="DS Moon Man"
+      data-price="15.00"
+      data-size="6.5&quot; × 6.5&quot;"
+      data-img="sticker-ds-moon-man.png?v=30"
+      data-category="Stickers">
+      <div class="product-image"><img src="sticker-ds-moon-man.png?v=30" alt=""></div>
+      <div class="product-name">DS Moon Man</div>
+      <div class="product-price">$15.00 CAD</div>
+      <button class="btn btn-primary add-to-cart" type="button">Add to Cart</button>
+    </div>
+
+  </div>
+</section>
+
+<!-- PRODUCT MODAL -->
 <div class="modal" id="productModal">
   <div class="modal-content" id="modalContent">
 
     <div class="logo-3d-wrapper">
       <div class="logo-3d">
-        <img src="ds-logo-v2.png?v=20" alt="DS Logo">
+        <img src="ds-logo-v2.png?v=30" alt="DS Logo">
       </div>
     </div>
 
@@ -504,6 +532,7 @@
     </div>
 
     <h2 id="modalTitle"></h2>
+    <p id="modalCategory" style="opacity:.7; margin-top:-6px;"></p>
     <p id="modalPrice"></p>
     <p id="modalSize"></p>
 
@@ -555,7 +584,6 @@
 <footer>© Drift State</footer>
 
 <script>
-  // ---------- Utilities ----------
   function moneyCAD(num) {
     const n = Number(num || 0);
     return `$${n.toFixed(2)} CAD`;
@@ -574,16 +602,12 @@
     localStorage.setItem('ds_cart_v1', JSON.stringify(cart));
   }
 
-  // Cart item shape:
-  // { key, id, name, price, img, color, qty }
-  // key includes id + color so variants are separate lines.
-
   let cart = loadCart();
 
-  // ---------- Elements ----------
   const modal = document.getElementById('productModal');
   const modalContent = document.getElementById('modalContent');
   const modalTitle = document.getElementById('modalTitle');
+  const modalCategory = document.getElementById('modalCategory');
   const modalPrice = document.getElementById('modalPrice');
   const modalSize = document.getElementById('modalSize');
   const modalImg = document.getElementById('modalProductImg');
@@ -598,20 +622,21 @@
   const cartItemsEl = document.getElementById('cartItems');
   const cartTotalEl = document.getElementById('cartTotal');
 
-  let currentProduct = null; // for modal add-to-cart
+  let currentProduct = null;
   let selectedColor = null;
 
-  // ---------- Product Modal ----------
   function openModalFromCard(card) {
     const name = card.dataset.name;
     const price = Number(card.dataset.price);
     const size = card.dataset.size;
     const img = card.dataset.img;
     const id = card.dataset.id;
+    const category = card.dataset.category || '';
 
-    currentProduct = { id, name, price, size, img };
+    currentProduct = { id, name, price, size, img, category };
 
     modalTitle.innerText = name;
+    modalCategory.innerText = category ? category : '';
     modalPrice.innerText = moneyCAD(price);
     modalSize.innerText = "Size: " + size;
     modalImg.src = img;
@@ -624,12 +649,10 @@
     modalContent.scrollTop = 0;
   }
 
-  // close modal
   closeBtn.addEventListener('click', () => modal.classList.remove('active'));
   modal.addEventListener('click', (e) => { if (e.target === modal) modal.classList.remove('active'); });
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') modal.classList.remove('active'); });
 
-  // choose color
   colorOptions.querySelectorAll('span').forEach(btn => {
     btn.addEventListener('click', () => {
       colorOptions.querySelectorAll('span').forEach(s => s.classList.remove('active'));
@@ -638,9 +661,8 @@
     });
   });
 
-  // ---------- Cart Logic ----------
   function addToCart(product, color) {
-    const chosenColor = color || 'Black'; // default if none picked
+    const chosenColor = color || 'Black';
     const key = `${product.id}__${chosenColor}`;
 
     const existing = cart.find(i => i.key === key);
@@ -718,7 +740,6 @@
     `).join('');
   }
 
-  // ---------- Cart Drawer ----------
   function openCart() {
     cartOverlay.classList.add('active');
   }
@@ -730,7 +751,6 @@
   closeCartBtn.addEventListener('click', closeCart);
   cartOverlay.addEventListener('click', (e) => { if (e.target === cartOverlay) closeCart(); });
 
-  // handle cart buttons (event delegation)
   cartItemsEl.addEventListener('click', (e) => {
     const btn = e.target.closest('button');
     if (!btn) return;
@@ -744,16 +764,13 @@
     if (action === 'remove') removeFromCart(key);
   });
 
-  // ---------- Wire up cards ----------
-  document.querySelectorAll('.decal-card').forEach(card => {
-    // clicking the card opens modal
+  // Wire product cards
+  document.querySelectorAll('.product-card').forEach(card => {
     card.addEventListener('click', (e) => {
-      // If user clicked the Add to Cart button, don't open modal
       if (e.target.closest('.add-to-cart')) return;
       openModalFromCard(card);
     });
 
-    // add-to-cart button on card
     const btn = card.querySelector('.add-to-cart');
     btn.addEventListener('click', (e) => {
       e.stopPropagation();
@@ -763,7 +780,6 @@
         price: Number(card.dataset.price),
         img: card.dataset.img
       };
-      // default color Black for quick add
       addToCart(product, 'Black');
     });
   });
@@ -775,12 +791,10 @@
     modal.classList.remove('active');
   });
 
-  // Fake checkout
   document.getElementById('fakeCheckoutBtn').addEventListener('click', () => {
     alert("Checkout is coming soon. This cart is working — when you're ready, we can connect real payments (Shopify/Stripe).");
   });
 
-  // initial render
   renderCart();
 </script>
 
