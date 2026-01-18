@@ -17,7 +17,6 @@
       font-family: Arial, sans-serif;
     }
 
-    /* HERO */
     .hero {
       min-height: 100vh;
       display: flex;
@@ -26,59 +25,64 @@
       text-align: center;
       padding: 2rem;
     }
+
     .brand { max-width: 720px; }
 
-    /* SPINNING LOGO */
     .logo-3d-wrapper {
       perspective: 1000px;
       display: flex;
       justify-content: center;
       margin-bottom: 1.5rem;
     }
+
     .logo-3d {
       width: 220px;
       height: 220px;
       transform-style: preserve-3d;
       animation: spin 10s linear infinite;
     }
+
     .logo-3d img {
       width: 100%;
       height: 100%;
       object-fit: contain;
-      background: transparent;
       filter:
         grayscale(100%)
         brightness(1.35)
         contrast(1.45)
         drop-shadow(0 0 18px rgba(255,255,255,0.35));
       pointer-events: none;
-      display: block;
     }
+
     @keyframes spin {
       from { transform: rotateY(0deg); }
-      to   { transform: rotateY(360deg); }
+      to { transform: rotateY(360deg); }
     }
 
     .brand-name {
       font-family: 'UnifrakturCook', cursive;
-      font-size: 4rem;
+      font-size: 3.2rem;
       letter-spacing: 6px;
-      margin: 0.5rem 0;
+      margin: 0.75rem 0 0;
     }
+
     .tagline {
       font-size: 2.5rem;
-      opacity: 0.85;
+      opacity: 0.9;
       margin-top: 0.5rem;
     }
 
-    /* DECALS */
-    .decals-section { padding: 5rem 2rem; }
+    .decals-section {
+      padding: 5rem 2rem;
+    }
+
     .section-title {
       text-align: center;
       font-size: 2.5rem;
       letter-spacing: 6px;
       margin-bottom: 3rem;
     }
+
     .decals-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -93,18 +97,13 @@
       text-align: center;
       cursor: pointer;
       transition: transform 0.25s ease, box-shadow 0.25s ease;
-      background: black;
-      position: relative;
-      z-index: 1;
-      -webkit-tap-highlight-color: transparent;
-      user-select: none;
     }
+
     .decal-card:hover {
       transform: translateY(-6px);
       box-shadow: 0 0 30px rgba(255,255,255,0.15);
     }
 
-    /* IMAGE FRAME — CENTERED */
     .decal-image {
       width: 100%;
       aspect-ratio: 16 / 9;
@@ -114,21 +113,14 @@
       align-items: center;
       justify-content: center;
       padding: 14px;
-      background: rgba(255,255,255,0.04);
-      pointer-events: none;
     }
+
     .decal-image img {
       max-width: 100%;
       max-height: 100%;
       object-fit: contain;
-      pointer-events: none;
-      display: block;
     }
 
-    .decal-name { letter-spacing: 2px; margin-bottom: 0.3rem; }
-    .decal-price { opacity: 0.85; }
-
-    /* MODAL OVERLAY */
     .modal {
       position: fixed;
       inset: 0;
@@ -136,63 +128,50 @@
       display: flex;
       justify-content: center;
       align-items: flex-start;
-      padding: 1.25rem 1rem;
-      z-index: 999;
+      padding: 1rem;
       opacity: 0;
       pointer-events: none;
-      transition: opacity 0.2s ease;
     }
+
     .modal.active {
       opacity: 1;
       pointer-events: auto;
     }
 
-    /* ✅ KEY FIX: allow scrolling inside modal content */
     .modal-content {
-      width: min(720px, 100%);
-      text-align: center;
-
-      max-height: calc(100vh - 2.5rem);
+      max-width: 720px;
+      width: 100%;
+      max-height: calc(100vh - 2rem);
       overflow-y: auto;
-      -webkit-overflow-scrolling: touch; /* iPhone smooth scrolling */
-
-      padding: 0.5rem 0 2rem;
-    }
-
-    /* keep logo smaller inside modal so content fits */
-    .modal .logo-3d {
-      width: 160px;
-      height: 160px;
+      -webkit-overflow-scrolling: touch;
+      text-align: center;
     }
 
     .modal-product-image {
       width: 100%;
       aspect-ratio: 16 / 9;
-      border: 1px solid rgba(255,255,255,0.18);
+      border: 1px solid rgba(255,255,255,0.2);
       margin: 1rem auto;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 16px;
-      background: rgba(255,255,255,0.05);
     }
+
     .modal-product-image img {
       max-width: 100%;
       max-height: 100%;
       object-fit: contain;
-      display: block;
     }
 
     .color-options span {
-      display: inline-block;
       border: 1px solid white;
-      padding: 0.45rem 0.9rem;
-      margin: 0.35rem;
+      padding: 0.5rem 1rem;
+      margin: 0.4rem;
+      display: inline-block;
       cursor: pointer;
       opacity: 0.7;
-      user-select: none;
-      -webkit-tap-highlight-color: transparent;
     }
+
     .color-options span.active {
       background: white;
       color: black;
@@ -200,14 +179,12 @@
     }
 
     .close {
-      margin-top: 1.25rem;
+      margin-top: 1.2rem;
       cursor: pointer;
-      opacity: 0.7;
-      padding: 0.7rem 1.1rem;
-      border: 1px solid rgba(255,255,255,0.25);
+      border: 1px solid rgba(255,255,255,0.3);
+      padding: 0.6rem 1.2rem;
       display: inline-block;
     }
-    .close:hover { opacity: 1; }
 
     footer {
       text-align: center;
@@ -223,128 +200,17 @@
   <div class="brand">
     <div class="logo-3d-wrapper">
       <div class="logo-3d">
-        <img src="ds-logo-v2.png?v=11" alt="DS Logo">
+        <img src="ds-logo-v2.png" alt="DS Logo">
       </div>
     </div>
-    <div class="brand-name">𝔇𝔯𝔦𝔣𝔱 𝔰𝔱𝔞𝔱𝔢</div>
+
+    <!-- 🔥 TEXT CHANGED HERE -->
+    <div class="brand-name">𝖘𝖍𝖔𝖕 𝖇𝖊𝖑𝖔𝖜</div>
     <div class="tagline">↓</div>
   </div>
 </section>
 
-<section class="decals-section">
-  <div class="section-title">DECALS</div>
-
-  <div class="decals-grid">
-
-    <div class="decal-card" data-name="DS Corner Banner" data-price="$45.00 CAD" data-size="16&quot; × 8&quot;" data-img="decal-ds-corner.png?v=11">
-      <div class="decal-image"><img src="decal-ds-corner.png?v=11" alt=""></div>
-      <div class="decal-name">DS Corner Banner</div>
-      <div class="decal-price">$45.00 CAD</div>
-    </div>
-
-    <div class="decal-card" data-name="DS Cursive Banner" data-price="$55.00 CAD" data-size="36&quot; × 5&quot;" data-img="decal-ds-cursive.png?v=11">
-      <div class="decal-image"><img src="decal-ds-cursive.png?v=11" alt=""></div>
-      <div class="decal-name">DS Cursive Banner</div>
-      <div class="decal-price">$55.00 CAD</div>
-    </div>
-
-    <div class="decal-card" data-name="DS Grunge Banner" data-price="$50.00 CAD" data-size="21&quot; × 9&quot;" data-img="decal-ds-grunge.png?v=11">
-      <div class="decal-image"><img src="decal-ds-grunge.png?v=11" alt=""></div>
-      <div class="decal-name">DS Grunge Banner</div>
-      <div class="decal-price">$50.00 CAD</div>
-    </div>
-
-    <div class="decal-card" data-name="DS Gothic Banner" data-price="$55.00 CAD" data-size="32&quot; × 4&quot;" data-img="decal-ds-gothic.png?v=11">
-      <div class="decal-image"><img src="decal-ds-gothic.png?v=11" alt=""></div>
-      <div class="decal-name">DS Gothic Banner</div>
-      <div class="decal-price">$55.00 CAD</div>
-    </div>
-
-  </div>
-</section>
-
-<!-- MODAL -->
-<div class="modal" id="productModal">
-  <div class="modal-content" id="modalContent">
-
-    <div class="logo-3d-wrapper">
-      <div class="logo-3d">
-        <img src="ds-logo-v2.png?v=11" alt="DS Logo">
-      </div>
-    </div>
-
-    <div class="modal-product-image">
-      <img id="modalProductImg" alt="">
-    </div>
-
-    <h2 id="modalTitle"></h2>
-    <p id="modalPrice"></p>
-    <p id="modalSize"></p>
-
-    <div class="color-options" id="colorOptions">
-      <span>Black</span>
-      <span>White</span>
-      <span>Silver</span>
-    </div>
-
-    <div class="close" id="closeBtn">Close</div>
-  </div>
-</div>
-
 <footer>© Drift State</footer>
-
-<script>
-  const modal = document.getElementById('productModal');
-  const modalContent = document.getElementById('modalContent');
-  const modalTitle = document.getElementById('modalTitle');
-  const modalPrice = document.getElementById('modalPrice');
-  const modalSize = document.getElementById('modalSize');
-  const modalImg = document.getElementById('modalProductImg');
-  const closeBtn = document.getElementById('closeBtn');
-  const colorOptions = document.getElementById('colorOptions');
-
-  function openModalFromCard(card) {
-    modalTitle.innerText = card.dataset.name;
-    modalPrice.innerText = card.dataset.price;
-    modalSize.innerText = "Size: " + card.dataset.size;
-    modalImg.src = card.dataset.img;
-    modalImg.alt = card.dataset.name;
-
-    // reset color selection
-    colorOptions.querySelectorAll('span').forEach(s => s.classList.remove('active'));
-
-    // show modal
-    modal.classList.add('active');
-
-    // ✅ ensure modal starts at top, then user can scroll down inside it
-    modalContent.scrollTop = 0;
-  }
-
-  document.querySelectorAll('.decal-card').forEach(card => {
-    card.addEventListener('click', () => openModalFromCard(card));
-  });
-
-  // color select
-  colorOptions.querySelectorAll('span').forEach(btn => {
-    btn.addEventListener('click', () => {
-      colorOptions.querySelectorAll('span').forEach(s => s.classList.remove('active'));
-      btn.classList.add('active');
-    });
-  });
-
-  // close button
-  closeBtn.addEventListener('click', () => modal.classList.remove('active'));
-
-  // click outside content closes
-  modal.addEventListener('click', (e) => {
-    if (e.target === modal) modal.classList.remove('active');
-  });
-
-  // escape closes
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') modal.classList.remove('active');
-  });
-</script>
 
 </body>
 </html>
